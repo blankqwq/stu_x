@@ -17,7 +17,7 @@ class FileUploadHandler
 
     public function save($file, $folder, $file_prefix)
     {
-        $folder_name = "uploads/images/$folder/" . date("Ym/d", time());
+        $folder_name = "uploads/files/$folder/" . date("Ym/d", time());
 
         $upload_path =  '/' . $folder_name;
 

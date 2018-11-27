@@ -3,7 +3,7 @@
         <h3 class="box-title">查看详细</h3>
 
         <div class="box-tools pull-right">
-            <a href="#" class="btn btn-box-tool" data-toggle="tooltip" title="Previous"><i
+            <a href=" {{url()->previous()}} " class="btn btn-box-tool" data-toggle="tooltip" title="Previous"><i
                         class="fa fa-chevron-left"></i></a>
             <a href="#" class="btn btn-box-tool" data-toggle="tooltip" title="Next"><i
                         class="fa fa-chevron-right"></i></a>
@@ -21,11 +21,11 @@
         <div class="mailbox-controls with-border text-center">
             <div class="btn-group">
                 <button type="button" class="btn btn-default btn-sm" data-toggle="tooltip" data-container="body"
-                        title="Delete">
+                        title="删除">
                     <i class="fa fa-trash-o"></i></button>
             </div>
             <!-- /.btn-group -->
-            <button type="button" class="btn btn-default btn-sm" data-toggle="tooltip" title="Print" onclick="window.location.href=''">
+            <button type="button" class="btn btn-default btn-sm" data-toggle="tooltip" title="编辑" onclick="window.location.href=''">
                 <i class="fa fa-edit"></i></button>
         </div>
         <!-- /.mailbox-controls -->
@@ -53,37 +53,101 @@
 
         </ul>
     </div>
-    @forelse ($topic->replies as $reply)
-        <div class="item">
-            <img src="dist/img/user2-160x160.jpg" alt="user image" class="offline">
+    @if($topic->can_reply)
+        <div class="reply-box">
+            <form action="{{route('reply.store')}}" method="POST" accept-charset="UTF-8">
+                <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                <input type="hidden" name="topic_id" value="{{ $topic->id }}">
+                <div class="form-group">
+                    <div class="form-group">
+                        <div id="editer">
+                            <p>欢迎使用 <b>stu系统</b></p>
+                        </div>
+                        <textarea id="content" hidden="hidden" name="content"></textarea>
+                        <script type="text/javascript" src="{{ asset('admin/wangEditor.min.js') }}"></script>
 
-            <p class="message">
-                <a href="#" class="name">
-                    <small class="text-muted pull-right"><i class="fa fa-clock-o"></i> 5:30</small>
-                    Susan Doe
-                </a>
-                I would like to meet you to discuss the latest news about
-                the arrival of the new theme. They say it is going to be one the
-                best themes on the market
-            </p>
+                    </div>
+                </div>
+                <button type="submit" class="btn btn-primary btn-sm"><i class="fa fa-share"></i>回复</button>
+            </form>
+            <script type="text/javascript">
+                var E = window.wangEditor
+                var editor = new E('#editer')
+                editor.customConfig.uploadFileName = 'myfile'
+                editor.customConfig.uploadImgServer = '/editor_upload?_token={{csrf_token()}}';
+                var $text1 = $('#content')
+                editor.customConfig.onchange = function (html) {
+                    // 监控变化，同步更新到 textarea
+                    $text1.val(html)
+                }
+                editor.create()
+                $text1.val(editor.txt.html())
+            </script>
         </div>
-    @empty
-        <div class="mailbox-read-message">
-            <div class="item">
-                <img src="" alt="user image" class="offline">
+        <hr>
+        @forelse ($topic->replies as $reply)
+            <div class="mailbox-read-message">
+                <div class="item">
+                    <div class=" media"  name="reply{{ $reply->id }}" id="reply{{ $reply->id }}">
+                        <div class="avatar pull-left">
+                            <a href="{{ route('users.show', [$reply->user_id]) }}">
+                                <img class="media-object img-thumbnail" alt="{{ $reply->user->name }}" src="{{ $reply->user->avatar }}"  style="width:48px;height:48px;"/>
+                            </a>
+                        </div>
 
-                <p class="message">
-                    <a href="#" class="name">
-                        <small class="text-muted pull-right"><i class="fa fa-clock-o"></i> 5:30</small>
-                        Susan Doe
-                    </a>
-                    I would like to meet you to discuss the latest news about
-                    the arrival of the new theme. They say it is going to be one the
-                    best themes on the market
-                </p>
+                        <div class="infos">
+                            <div class="media-heading">
+                                <a href="{{ route('users.show', [$reply->user_id]) }}" title="{{ $reply->user->name }}">
+                                    {{ $reply->user->name }}
+                                </a>
+                                <span> •  </span>
+                                <span class="meta" title="{{ $reply->created_at }}">{{ $reply->created_at->diffForHumans() }}</span>
+
+                                {{-- 回复删除按钮 --}}
+                                <span class="meta pull-right">
+                                <a title="删除回复">
+                                <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
+                                </a>
+                            </span>
+                            </div>
+                            <div class="reply-content">
+                                {!! $reply->content !!}
+                            </div>
+                        </div>
+                    </div>
+                    <hr>
+                </div>
             </div>
-        </div>
-    @endforelse
+        @empty
+            <div class="mailbox-read-message">
+                <div class="item">
+                    <div class=" media"  name="reply" id="reply">
+                        <div class="avatar pull-left">
+                            <a href="">
+                                <img class="media-object img-thumbnail" alt="系统" src="/storage/uploads/images/default.jpg"  style="width:48px;height:48px;"/>
+                            </a>
+                        </div>
+
+                        <div class="infos">
+                            <div class="media-heading">
+                                <a href="" title="系统：">
+                                    系统：
+                                </a>
+                                <span> •  </span>
+                                <span class="meta" title="时间">00:00</span>
+
+                            </div>
+                            <div class="reply-content">
+                                暂无回复哦
+                            </div>
+                        </div>
+                    </div>
+                    <hr>
+                </div>
+            </div>
+        @endforelse
+    @endif
+
     {{--@if($topic->)--}}
     {{--@endif--}}
 </div>

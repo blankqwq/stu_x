@@ -48,6 +48,7 @@ Route::group(['middleware' => 'auth','namespace'=>'Stu'], function () {
     Route::get('classes/{id}/users', 'ClassController@users')->name('classes.users');
 
 
+    Route::post('reply','ReplyController@store')->name('reply.store');
     //是否是班级中的人！权限（中间件）
 //    Route::resource('homework', 'HomeworkController',['only'=>['show','create','edit','update']]);
 

@@ -20,6 +20,7 @@ class CreateUsersTable extends Migration
             $table->string('avatar')->default('');
             $table->string('sex',1);
             $table->string('sign')->nullable()->comment('个性签名');
+            $table->integer('notification_count')->unsigned()->default(0);
             $table->string('password');
             $table->rememberToken();
             $table->timestamps();
