@@ -66,10 +66,10 @@
                     <li class="{{active_class(if_route('users.edit'))}}"><a href="{{route('users.edit',$user->id)}}"><i class="fa fa-circle-o"></i> 信息编辑</a></li>
                 </ul>
             </li>
-            <li class="treeview @yield('message')">
+            <li class="treeview ">
                 <a href="#">
                     <i class="fa fa-envelope"></i>
-                    <span>私信系统</span>
+                    <span>消息系统</span>
                     <span class="pull-right-container">
               <i class="fa fa-angle-left pull-right"></i>
             </span>
@@ -77,24 +77,9 @@
                 <ul class="treeview-menu">
                     <li class=" @yield('message-noread')"><a href="/message/index.html"><i class="fa fa-circle-o"></i> 未读信息</a></li>
                     <li class=" @yield('message-read')"><a href="/message/receive.html"><i class="fa fa-circle-o"></i> 已读消息</a></li>
-                    <li class=" @yield('message-post')"><a href="/message/send.html"><i class="fa fa-circle-o"></i> 发布消息</a></li>
-                    <li class=" @yield('message-posted')"><a href="/message/outbox.html"><i class="fa fa-circle-o"></i> 已发布</a></li>
-                    <li class=" @yield('message-trash')"><a href="/message/trash.html"><i class="fa fa-circle-o"></i> 消息回收站</a></li>
                 </ul>
             </li>
-            {{--<li class="treeview">--}}
-                {{--<a href="#">--}}
-                    {{--<i class="fa fa-edit"></i> <span>问答系统</span>--}}
-                    {{--<span class="pull-right-container">--}}
-              {{--<i class="fa fa-angle-left pull-right"></i>--}}
-            {{--</span>--}}
-                {{--</a>--}}
-                {{--<ul class="treeview-menu">--}}
-                    {{--<li><a href="pages/forms/general.html"><i class="fa fa-circle-o"></i> 在线提问</a></li>--}}
-                    {{--<li><a href="pages/forms/advanced.html"><i class="fa fa-circle-o"></i> 问题列表</a></li>--}}
-                    {{--<li><a href="pages/forms/editors.html"><i class="fa fa-circle-o"></i> 系统管理</a></li>--}}
-                {{--</ul>--}}
-            {{--</li>--}}
+
             {{--<li class="treeview">--}}
                 {{--<a href="#">--}}
                     {{--<i class="fa fa-table"></i> <span>答题系统</span>--}}
@@ -131,9 +116,24 @@
                     <li class="@yield('files-me')"><a href="/filesystem"><i class="fa fa-circle-o"></i> 我的文件</a></li>
                 </ul>
             </li>
-
+            @role(config('code.role'))
+            {{--|| if_route('users.edit') || if_route('users.show') ||if_route('users.search'))--}}
+            <li class="treeview {{active_class(if_route('classes.verify') || if_route('classes.getagree')||if_route('classes.getdisagree'))  }}">
+                <a href="#">
+                    <i class="fa fa-edit"></i> <span>班级审批</span>
+                    <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
+                </a>
+                <ul class="treeview-menu">
+                    <li class="{{active_class(if_route('classes.verify'))  }}"><a href="{{route('classes.verify')}}"><i class="fa fa-circle-o"></i> 班级审批</a></li>
+                    <li class="{{active_class(if_route('classes.getagree'))  }}"><a href="{{route('classes.getagree')}}"><i class="fa fa-circle-o"></i> 通过的班级</a></li>
+                    <li class="{{active_class(if_route('classes.getdisagree'))  }}"><a href="{{route('classes.getdisagree')}}"><i class="fa fa-circle-o"></i> 未通过的班级</a></li>
+                </ul>
+            </li>
+            @endrole
             <li class="header">LABELS</li>
-            @role('master|admin')
+            @role(config('code.role'))
             <li><a href="/admin/users"><i class="fa fa-circle-o text-yellow"></i> <span>后台管理</span></a></li>
             @endrole
             <li><a href="#"><i class="fa fa-circle-o text-yellow"></i> <span>Warning</span></a></li>

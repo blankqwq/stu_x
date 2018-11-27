@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Auth;
 use Spatie\Permission\Traits\HasRoles;
 
@@ -15,20 +16,10 @@ class User extends Authenticatable
     use HasRoles;
     protected $guard_name = 'web';
 
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var array
-     */
     protected $fillable = [
         'name', 'email', 'password','sex','avatar','sign'
     ];
 
-    /**
-     * The attributes that should be hidden for arrays.
-     *
-     * @var array
-     */
     protected $hidden = [
         'password', 'remember_token',
     ];
@@ -41,6 +32,10 @@ class User extends Authenticatable
         return $this->belongsToMany(Classes::class,'class_users','user_id','class_id')->wherePivot('token', null);;
     }
 
+    /**
+     * 获取创建的班级
+     * @return \Illuminate\Database\Eloquent\Relations\HasOne
+     */
     public function classe(){
         return $this->hasOne(Classes::class,'user_id');
     }
@@ -61,6 +56,10 @@ class User extends Authenticatable
         return $this->morphMany(File::class,'filetable');
     }
 
+    /**
+     * 消息系统的功能
+     * @param $instance
+     */
     public function notify($instance)
     {
         if ($this->id == Auth::id()) {
@@ -69,4 +68,24 @@ class User extends Authenticatable
         $this->increment('notification_count');
         $this->laraNotify($instance);
     }
+
+    /**
+     * 判断是否是文章的作者
+     * @param $model
+     * @return bool
+     */
+    public function isAuthOf($model){
+        return $this->id === $model->user_id;
+    }
+
+    /**
+     * 是否属于班级中的人
+     * @param $id
+     * @return bool
+     */
+    public function isClassOf($id)
+    {
+        return $this->classes()->wherePivot('class_id',$id)->count()>0;
+    }
+
 }

@@ -67,7 +67,7 @@
                 <b>加入班级</b> <a class="pull-right" href="/join/class/{{ $classe->id}}">点击申请</a>
             </li>
         </ul>
-        @if(\Illuminate\Support\Facades\Auth::id() === $classe->creator->id)
+        @can('update',$classe)
             <button class="btn btn-primary btn-block" data-toggle="modal" data-target="#myModal">修改班级资料
             </button>
             <!-- 模态框（Modal） -->
@@ -129,7 +129,7 @@
                             {{--</div>--}}
                             {{--</div>--}}
                             {{--</form>--}}
-                            @endif
+                        @endcan
                         </div><!-- /.modal -->
                     </div>
 

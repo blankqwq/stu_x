@@ -36,9 +36,18 @@ Route::group(['middleware' => 'auth','namespace'=>'Stu'], function () {
     Route::put('homework/{id}','HomeworkController@update')->name('homework.update');
     Route::get('homework/{id}/correct','HomeworkController@correct')->name('homework.correct');
 
+
     Route::get('stuhomework/{id}','StuHomeworkController@show')->name('stuhomework.show');
     Route::put('stuhomework/{id}','StuHomeworkController@update')->name('stuhomework.update');
     Route::post('stuhomework/{id}','StuHomeworkController@store')->name('stuhomework.store');
+
+
+    Route::get('classes/verify','ClassController@verify')->name('classes.verify');
+    Route::get('classes/agree','ClassController@getagree')->name('classes.getagree');
+    Route::get('classes/disagree','ClassController@getdisagree')->name('classes.getdisagree');
+
+    Route::post('classes/agree/{id}','ClassController@agree')->name('agree.classes');
+    Route::post('classes/disagree/{id}','ClassController@disagree')->name('disagree.classes');
 
 
     Route::get('classes/me','ClassController@me')->name('classes.join');
