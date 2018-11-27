@@ -4,11 +4,14 @@ namespace App\Models;
 
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Support\Facades\Auth;
 use Spatie\Permission\Traits\HasRoles;
 
 class User extends Authenticatable
 {
-    use Notifiable;
+    use Notifiable {
+        notify as protected laraNotify;
+    }
     use HasRoles;
     protected $guard_name = 'web';
 
@@ -56,5 +59,14 @@ class User extends Authenticatable
      */
     public function files(){
         return $this->morphMany(File::class,'filetable');
+    }
+
+    public function notify($instance)
+    {
+        if ($this->id == Auth::id()) {
+            return;
+        }
+        $this->increment('notification_count');
+        $this->laraNotify($instance);
     }
 }

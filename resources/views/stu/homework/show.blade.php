@@ -3,7 +3,7 @@
         <h3 class="box-title">查看详细</h3>
 
         <div class="box-tools pull-right">
-            <a href="#" class="btn btn-box-tool" data-toggle="tooltip" title="Previous"><i
+            <a href="{{url()->previous()}}" class="btn btn-box-tool" data-toggle="tooltip" title="Previous"><i
                         class="fa fa-chevron-left"></i></a>
             <a href="#" class="btn btn-box-tool" data-toggle="tooltip" title="Next"><i
                         class="fa fa-chevron-right"></i></a>
@@ -24,9 +24,6 @@
                     提交作业
                 </button>
             </div>
-            <!-- /.btn-group -->
-            <button type="button" class="btn btn-default btn-sm" data-toggle="tooltip" title="Print">
-                <i class="fa fa-print"></i></button>
         </div>
         <!-- /.mailbox-controls -->
         <div class="mailbox-read-message">
@@ -94,32 +91,6 @@
     </div>
 
 
-    @forelse ($homework->posters as $poster)
-        <div class="item">
-            <img src="" alt="user image" class="offline">
-            <p class="message">
-                <a href="#" class="name">
-                    <small class="text-muted pull-right">
-                        <i class="fa fa-clock-o"></i>{{$poster->created_at}}
-                    </small>
-                    Susan Doe
-                </a>
-                {{--{{}}--}}
-            </p>
-        </div>
-    @empty
-        <div class="mailbox-read-message">
-            <div class="item">
-                <img src="" alt="user image" class="offline">
+    @include('stu.homework._stuhomework',['stuhomeworks'=>$homework->posters])
 
-                <p class="message">
-                    <a href="#" class="name">
-                        <small class="text-muted pull-right"><i class="fa fa-clock-o"></i> 0:00</small>
-                        系统
-                    </a>
-                    暂时无人提交
-                </p>
-            </div>
-        </div>
-    @endforelse
 </div>

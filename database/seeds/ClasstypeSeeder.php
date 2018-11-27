@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Database\Seeder;
-
+use \App\Models\ClassType;
 class ClasstypeSeeder extends Seeder
 {
     /**
@@ -11,6 +11,13 @@ class ClasstypeSeeder extends Seeder
      */
     public function run()
     {
-        //
+        $type=new ClassType();
+        $type->category="班级";
+        $type->save();
+
+        $type=new ClassType();
+        $type->category="社团";
+        $type->save();
+
     }
 }

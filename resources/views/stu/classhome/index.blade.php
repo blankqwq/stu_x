@@ -35,7 +35,7 @@
                                  class="profile-user-img img-responsive img-circle"/>
                             <p class="text-center">{{ $classe->name }}</p>
                             <li class="{{ active_class(if_query('tab',null)) }}">
-                                <a href="{{ route('classes.show', [$classe->id, 'tab' => '']) }}">
+                                <a href="{{ route('classes.show', [$classe->id]) }}">
                                     <i class="fa fa-inbox"></i>{{$classe->type->category}}公告
                                     <span class="label label-warning pull-right">{{$count_notice}}</span></a>
                             </li>
@@ -121,9 +121,8 @@
                     });
                 });
             </script>
-        @if (if_query('tab', null))
-            @include('stu.classhome._data',['datas' => $classe->notices()->with('replies')->recent()->paginate(10)])
-        @elseif(if_query('tab', 'need'))
+
+        @if(if_query('tab', 'need'))
             @include('stu.classhome._data', ['datas' => $classe->needs()->with('replies')->recent()->paginate(10)])
         @elseif(if_query('tab', 'file'))
             @include('stu.classhome._file', ['files' => ''])
@@ -141,7 +140,6 @@
             @include('stu.classhome._homework',['homeworks'=>$classe->homeworks()->with('publisher')->withCount('posters')->recent()->paginate(10)])
         @else
             @include('stu.classhome._data',['datas' => $classe->notices()->with('replies')->recent()->paginate(10)])
-
         @endif
             <!-- /.col -->
             <!-- /.row -->

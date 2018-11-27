@@ -2,20 +2,15 @@
 
 namespace App\Http\Controllers\Stu;
 
+use App\Http\Requests\ReplyRequest;
+use App\Models\Replies;
+use App\Notifications\TopicReplied;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use \Illuminate\Support\Facades\Auth;
 
 class ReplyController extends Controller
 {
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
 
     /**
      * Store a newly created resource in storage.
@@ -23,9 +18,13 @@ class ReplyController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(ReplyRequest $request)
     {
-        //
+        $data=$request->only('topic_id','content');
+        $data['user_id']=Auth::id();
+        $data['pid']=0;
+        Replies::create($data);
+//        return redirect(route('classes.show',));
     }
 
 

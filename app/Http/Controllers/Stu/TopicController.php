@@ -59,7 +59,7 @@ class TopicController extends Controller
     public function edit($id)
     {
         //权限判定
-        $topic=Topic::with('type','')->find($id);
+        $topic=Topic::with('type','sender')->find($id);
         return view('stu.topic.edit',compact('topic'));
     }
 
