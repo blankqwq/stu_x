@@ -30,4 +30,9 @@ class UserClassPolicy
         return $user->isClassOf($classes->id) || $user->hasRole(config('code.role'));
     }
 
+
+    public function update(User $user,Classes $classes){
+        return $user->hasRole(config('code.role').'|class'.$classes->id);
+    }
+
 }

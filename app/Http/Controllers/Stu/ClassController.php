@@ -8,6 +8,7 @@ use App\Models\Classes;
 use App\Models\ClassType;
 use App\Models\TopicType;
 use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
@@ -169,22 +170,56 @@ class ClassController extends Controller
     }
 
 
-    public function agree($id,Request $request){
+    /**
+     * 同意审批班级
+     * @param $id
+     * @param Request $request
+     * @return string
+     */
+    public function agree(Request $request,$id,$message){
 
-            $classe = Classes::find($id);
-            $classe->update(['user_allow' => Auth::id()]);
-
+        $classe = Classes::find($id);
+        $classe->update(['user_allow' => Auth::id()]);
+        if ($message!="")
+            Auth::user()->unreadNotifications()->where('id',$message)->update(['read_at' => Carbon::now()]);
         return "1";
     }
 
-    public function disagree($id,Request $request){
+    /**
+     * @param $id
+     * @param null $message
+     * @param Request $request
+     * @return string
+     */
+    public function disagree(Request $request,$id,$message){
         try {
             $classe = Classes::find($id);
             $classe->update(['user_allow' => 0]);
+            if ($message!="")
+                Auth::user()->unreadNotifications()->where('id',$message)->update(['read_at' => Carbon::now()]);
         } catch (\Exception $exception) {
             return "0";
         }
         return "1";
     }
+
+
+    /**
+     * 清除不需要的人
+     * @param $id
+     * @param Request $request
+     * @return string
+     */
+    public function deleteuser($id, Request $request)
+    {
+        $this->validate($request, [
+            'ids.*' => 'required|exists:classes,id',
+        ]);
+        $classe = Classes::find($id);
+        $ids = $request->input('ids');
+        $classe->users()->detach($ids);
+        return "1";
+    }
+
 
 }

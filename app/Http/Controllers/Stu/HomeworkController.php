@@ -23,10 +23,11 @@ class HomeworkController extends Controller
     }
 
     /**
+     * 创建作业
      * @param $id
      * @param Request $request
      * @return \Illuminate\Http\RedirectResponse
-     * 保存
+     * @throws \Illuminate\Auth\Access\AuthorizationException
      */
     public function store($id,Request $request)
     {
@@ -44,41 +45,43 @@ class HomeworkController extends Controller
         return redirect(route('classes.show',$id))->with('success','发布成功');
     }
 
-    /**
-     * Display the specified resource.
-     *  展示作业
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+    /***
+     * 获取作业
+     * @param $id
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * @throws \Illuminate\Auth\Access\AuthorizationException
      */
     public function show($id)
     {
+        $this->authorize('view',$id);
         $homework=Homework::with('publisher','classes','posters')->find($id);
         return view('stu.homework.show',compact('homework'));
     }
 
     /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * 获取修改作业
+     * @param $id
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * @throws \Illuminate\Auth\Access\AuthorizationException
      */
     public function edit($id)
     {
-        //
+        $this->authorize('update',Homework::find($id));
         $homework=Homework::with('publisher','classes','posters')->find($id);
         return view('stu.homework.edit',compact('homework'));
 
     }
 
     /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * 获取作业
+     * @param Request $request
+     * @param $id
+     * @return \Illuminate\Http\RedirectResponse
+     * @throws \Illuminate\Auth\Access\AuthorizationException
      */
     public function update(Request $request, $id)
     {
+        $this->authorize('update',$id);
         $homework=Homework::find($id);
         $time=$this->gettime($request->input('time'));
         $data = [
@@ -93,22 +96,27 @@ class HomeworkController extends Controller
     }
 
     /**
+     * 批改作业
      * @param $id
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * @throws \Illuminate\Auth\Access\AuthorizationException
      */
     public function correct($id){
+        $this->authorize('correct',Homework::find($id));
         $stuhomeworks=Homework::find($id)->posters()->with('homework')->paginate(15);
         return view('stu.homework.correct',compact('stuhomeworks'));
     }
 
     /**
-     * Remove the specified resource from storage.
+     * @param $id
+     * @param Request $request
+     * @return \Illuminate\Http\RedirectResponse
+     * @throws \Illuminate\Auth\Access\AuthorizationException
      *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
      */
     public function destroy($id,Request $request)
     {
+        $this->authorize('destroy',$id);
         $this->validate($request, [
             'ids.*' => 'required|exists:homeworks,id',
         ]);

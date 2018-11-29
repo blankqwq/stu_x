@@ -16,7 +16,6 @@ Route::get('/home', 'HomeController@index')->name('stu.home');
 
 //登录的路由
 Route::group(['middleware' => 'auth','namespace'=>'Stu'], function () {
-    #___________________________文件上传___________
 //    Route::post('editor_upload', 'FunctionController@upload');
     Route::get('users/search', 'UserController@searchindex')->name('users.search');
     Route::get('users/{user}/small', 'UserController@small')->name('users.small');
@@ -42,12 +41,19 @@ Route::group(['middleware' => 'auth','namespace'=>'Stu'], function () {
     Route::post('stuhomework/{id}','StuHomeworkController@store')->name('stuhomework.store');
 
 
+    Route::get('classuser','ClassUserController@index')->name('classuser.index');
+    Route::post('classuser/{id}/agree/{message?}','ClassUserController@agree')->name('classuser.agree');
+    Route::post('classuser/{id}/disagree/{message?}','ClassUserController@disagree')->name('classuser.disagree');
+
+
+    Route::post('classes/{id}/join','ClassUserController@store')->name('classuser.store');
+    Route::get('classes/{id}/join','ClassUserController@create')->name('classes.joining');
     Route::get('classes/verify','ClassController@verify')->name('classes.verify');
     Route::get('classes/agree','ClassController@getagree')->name('classes.getagree');
     Route::get('classes/disagree','ClassController@getdisagree')->name('classes.getdisagree');
 
-    Route::post('classes/agree/{id}','ClassController@agree')->name('agree.classes');
-    Route::post('classes/disagree/{id}','ClassController@disagree')->name('disagree.classes');
+    Route::post('classes/agree/{id}/{message?}','ClassController@agree')->name('agree.classes');
+    Route::post('classes/disagree/{id}/{message?}','ClassController@disagree')->name('disagree.classes');
 
 
     Route::get('classes/me','ClassController@me')->name('classes.join');
@@ -60,6 +66,9 @@ Route::group(['middleware' => 'auth','namespace'=>'Stu'], function () {
     Route::post('reply','ReplyController@store')->name('reply.store');
     //是否是班级中的人！权限（中间件）
 //    Route::resource('homework', 'HomeworkController',['only'=>['show','create','edit','update']]);
+
+    Route::get('messages','MessageController@index')->name('messages.index');
+    Route::get('messages/{id}','MessageController@ignore')->name('messages.ignore');
 
 
     Route::resource('flies', 'FileController',['only'=>['index','show','create','store','edit','update']]);

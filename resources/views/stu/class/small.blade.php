@@ -63,9 +63,15 @@
                         不需要
                     @endif</a>
             </li>
-            <li class="list-group-item">
-                <b>加入班级</b> <a class="pull-right" href="/join/class/{{ $classe->id}}">点击申请</a>
-            </li>
+            @can('view',$classe)
+                <li class="list-group-item">
+                    <b>进入班级</b> <a class="pull-right" href="{{route('classes.show',$classe)}}">班级首页</a>
+                </li>
+            @elsecannot('view',$classe)
+                <li class="list-group-item">
+                    <b>加入班级</b> <a class="pull-right" href="{{route('classes.joining',$classe)}}">点击申请</a>
+                </li>
+            @endcan
         </ul>
         @can('update',$classe)
             <button class="btn btn-primary btn-block" data-toggle="modal" data-target="#myModal">修改班级资料

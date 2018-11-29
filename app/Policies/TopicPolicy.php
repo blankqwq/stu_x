@@ -32,6 +32,7 @@ class TopicPolicy
     {
         //判断当前用户是否具有班级管理权限
 //        return $user->isClassOf($id) && $user->hasRole(config('code.role').'|class'.$id);
+        return true;
     }
 
     /**

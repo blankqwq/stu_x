@@ -61,11 +61,12 @@
                                 <a href="{{ route('classes.show', [$classe->id, 'tab' => 'chart']) }}">
                                     <i class="fa fa-envelope-o"></i>  聊天室</a>
                             </li>
-
+                            @can('update',$classe)
                             <li class="{{ active_class(if_query('tab', 'send')) }}">
                                 <a href="{{ route('classes.show', [$classe->id, 'tab' => 'send']) }}">
                                     <i class="fa fa-filter"></i> 发送</a>
                             </li>
+                            @endcan
                         </ul>
                     </div>
                 </div>
@@ -89,9 +90,13 @@
                             <li class="{{ active_class(if_query('tab', 'fraction')) }}">
                                 <a href="{{ route('classes.show', [$classe->id, 'tab' => 'fraction']) }}">
                                     <i class="fa fa-circle-o text-yellow"></i> 作业分数</a></li>
+
+                            @can('update',$classe)
+
                             <li class="{{ active_class(if_query('tab', 'sendwork')) }}">
                                 <a href="{{ route('classes.show', [$classe->id, 'tab' => 'sendwork']) }}"><i
                                             class="fa fa-circle-o text-light-blue"></i> 发布作业</a></li>
+                            @endcan
                         </ul>
                     </div>
                     <!-- /.box-body -->

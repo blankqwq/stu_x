@@ -66,7 +66,7 @@
                     <li class="{{active_class(if_route('users.edit'))}}"><a href="{{route('users.edit',$user->id)}}"><i class="fa fa-circle-o"></i> 信息编辑</a></li>
                 </ul>
             </li>
-            <li class="treeview ">
+            <li class="treeview {{active_class(if_route('messages.index'))}}">
                 <a href="#">
                     <i class="fa fa-envelope"></i>
                     <span>消息系统</span>
@@ -75,8 +75,7 @@
             </span>
                 </a>
                 <ul class="treeview-menu">
-                    <li class=" @yield('message-noread')"><a href="/message/index.html"><i class="fa fa-circle-o"></i> 未读信息</a></li>
-                    <li class=" @yield('message-read')"><a href="/message/receive.html"><i class="fa fa-circle-o"></i> 已读消息</a></li>
+                    <li class=" {{active_class(if_route('messages.index'))}}"><a href="{{route('messages.index')}}"><i class="fa fa-circle-o"></i> 消息通知</a></li>
                 </ul>
             </li>
 

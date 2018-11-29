@@ -33,15 +33,14 @@ class User extends Authenticatable
     }
 
     /**
-     * 获取创建的班级
-     * @return \Illuminate\Database\Eloquent\Relations\HasOne
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
     public function classe(){
-        return $this->hasOne(Classes::class,'user_id');
+        return $this->hasMany(Classes::class,'user_id','id')->where('user_allow','>',0);
     }
 
     /**
-     * 获取全部班级
+     * 获取全部加入或正在加入的班级
      * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
      */
     public function notclasses(){

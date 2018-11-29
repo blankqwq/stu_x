@@ -3,25 +3,26 @@
 namespace App\Notifications;
 
 use App\Models\Classes;
+use App\Models\ClassUser;
+use App\Models\User;
 use Illuminate\Bus\Queueable;
 use Illuminate\Notifications\Notification;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 
-class ClassCreate extends Notification
+class NewStuJinClass extends Notification
 {
     use Queueable;
 
-    public $classe;
+    public $classuser;
     /**
      * Create a new notification instance.
      *
      * @return void
      */
-    public function __construct(Classes $classes)
+    public function __construct(ClassUser $classUser)
     {
-        $this->classe=$classes;
-        //
+       $this->classuser=$classUser;
     }
 
     /**
@@ -63,19 +64,26 @@ class ClassCreate extends Notification
     }
 
 
+    /**
+     * 数据库发送逻辑
+     * @param $notifiable
+     * @return array
+     */
     public function toDatabase($notifiable)
     {
-        $id = $this->classe->id;
+        $user=User::find($this->classuser->user_id);
+        $class=Classes::find($this->classuser->class_id);
 
-        // 存入数据库里的数据
+        //信息内容
         return [
-            'class_id'=>$id,
-            'class_name' => $this->classe->name,
-            'class_avatar' => $this->classe->avatar,
-            'type'=>$this->classe->type->category,
-            'user_id' => $this->classe->user_id,
-            'user_name' => $this->classe->creator->name,
-            'user_avatar' => $this->classe->creator->avatar,
+            'classuser_id'=>$this->classuser->id,
+            'user_id' => $user->id,
+            'class_id' =>$this->classuser->class_id,
+            'user_name' =>$user->name,
+            'user_avatar' => $user->avatar,
+            'token' => $this->classuser->token,
+            'class_name' => $class->name,
+            'class_avatar' => $class->avatar,
         ];
     }
 }
