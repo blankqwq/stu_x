@@ -2,26 +2,26 @@
 
 namespace App\Notifications;
 
-use App\Models\Classes;
+use App\Models\User;
 use Illuminate\Bus\Queueable;
 use Illuminate\Notifications\Notification;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 
-class ClassCreate extends Notification
+class PersonMessage extends Notification
 {
     use Queueable;
 
-    public $classe;
+    public $user,$content;
     /**
      * Create a new notification instance.
      *
      * @return void
      */
-    public function __construct(Classes $classes)
+    public function __construct($user,$content)
     {
-        $this->classe=$classes;
-        //
+        $this->user=$user;
+        $this->content=$content;
     }
 
     /**
@@ -62,20 +62,21 @@ class ClassCreate extends Notification
         ];
     }
 
-
     public function toDatabase($notifiable)
     {
-        $id = $this->classe->id;
-
-        // 存入数据库里的数据
-        return [
-            'class_id'=>$id,
-            'class_name' => $this->classe->name,
-            'class_avatar' => $this->classe->avatar,
-            'type'=>$this->classe->type->category,
-            'user_id' => $this->classe->user_id,
-            'user_name' => $this->classe->creator->name,
-            'user_avatar' => $this->classe->creator->avatar,
-        ];
+        if ($this->user!=0)
+            return [
+            'user_id'=>$this->user->id,
+            'user_name'=>$this->user->name,
+            'user_avatar'=>$this->user->avatar,
+            'content'=>$this->content,
+            ];
+        else
+            return [
+                'user_id'=>0,
+                'user_name'=>'系统',
+                'user_avatar'=>'/storage/uploads/images/system.jpg',
+                'content'=>$this->content,
+            ];
     }
 }

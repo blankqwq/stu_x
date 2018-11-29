@@ -8,10 +8,12 @@ use App\Models\Classes;
 use App\Models\ClassType;
 use App\Models\TopicType;
 use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Spatie\Permission\Models\Role;
 
 class ClassController extends Controller
 {
@@ -90,16 +92,16 @@ class ClassController extends Controller
     }
 
     /**
-     * Display the specified resource.
-     *  展现班级的模块
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param $id
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * @throws \Illuminate\Auth\Access\AuthorizationException
      */
     public function show($id)
     {
+
         $classe=Classes::with('creator','type')->find($id);
-        if (!$classe)
-            abort('404','无班级');
+        //判断权限
+        $this->authorize('view',$classe);
         $types=TopicType::all();
         $count_homework=Classes::find($id)->homeworks()->count();
         $count_notice=Classes::find($id)->notices()->count();
@@ -108,16 +110,6 @@ class ClassController extends Controller
         return view('stu.classhome.index',compact('classe','count_need','count_notice','count_homework','types'));
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *  编辑班级信息
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-//    public function edit(Classes $classe)
-//    {
-//        //
-//    }
 
     /**
      * 更新用户信息
@@ -137,9 +129,96 @@ class ClassController extends Controller
         return redirect(route('classes.my'))->with('更改成功');
     }
 
+    /**
+     * 班级下的学生
+     * @param $id
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
     public function users($id){
         $users=Classes::find($id)->student()->paginate(15);
         return view('stu.user.table',compact('users'));
+    }
+
+    /**
+     * 获取未授权的班级
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function verify(){
+        $classes = Classes::with('type', 'creator')->where('user_allow', '=', null)
+            ->orWhere('user_allow', '=', "0")->paginate(15);
+        return view('stu.class.verify', compact('classes'));
+    }
+
+    /**
+     * 获取已被授权的班级
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function getagree(){
+        $classes = Classes::with('type', 'creator')->where('user_allow', '>', 0)
+            ->paginate(15);
+        return view('stu.class.verify', compact('classes'));
+    }
+
+    /**
+     * 获取拒绝授权的班级
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function getdisagree(){
+        $classes = Classes::with('type', 'creator')->where('user_allow', '=', 0)
+            ->paginate(15);
+        return view('stu.class.verify', compact('classes'));
+    }
+
+
+    /**
+     * 同意审批班级
+     * @param $id
+     * @param Request $request
+     * @return string
+     */
+    public function agree(Request $request,$id,$message){
+
+        $classe = Classes::find($id);
+        $classe->update(['user_allow' => Auth::id()]);
+        if ($message!="")
+            Auth::user()->unreadNotifications()->where('id',$message)->update(['read_at' => Carbon::now()]);
+        return "1";
+    }
+
+    /**
+     * @param $id
+     * @param null $message
+     * @param Request $request
+     * @return string
+     */
+    public function disagree(Request $request,$id,$message){
+        try {
+            $classe = Classes::find($id);
+            $classe->update(['user_allow' => 0]);
+            if ($message!="")
+                Auth::user()->unreadNotifications()->where('id',$message)->update(['read_at' => Carbon::now()]);
+        } catch (\Exception $exception) {
+            return "0";
+        }
+        return "1";
+    }
+
+
+    /**
+     * 清除不需要的人
+     * @param $id
+     * @param Request $request
+     * @return string
+     */
+    public function deleteuser($id, Request $request)
+    {
+        $this->validate($request, [
+            'ids.*' => 'required|exists:classes,id',
+        ]);
+        $classe = Classes::find($id);
+        $ids = $request->input('ids');
+        $classe->users()->detach($ids);
+        return "1";
     }
 
 

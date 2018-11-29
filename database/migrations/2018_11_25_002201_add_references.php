@@ -18,6 +18,7 @@ class AddReferences extends Migration
                 ->onUpdate('cascade')->onDelete('cascade');
             $table->foreign('class_id')->references('id')->on('classes')
                 ->onUpdate('cascade')->onDelete('cascade');
+            $table->unique(['user_id','class_id']);
         });
 
         Schema::table('homeworks', function (Blueprint $table) {

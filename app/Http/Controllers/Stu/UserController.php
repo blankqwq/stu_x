@@ -17,19 +17,19 @@ class UserController extends Controller
      */
     public function index()
     {
-        $user=Auth::user();
-        return view('stu.user.show', compact('user'));
+        $oneuser=Auth::user();
+        return view('stu.user.show', compact('oneuser'));
     }
 
 
     /**
-     * 获取别的id用户的信息
-     * @param User $user
+     * @param User $oneuser
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function show(User $user)
+    public function show($id)
     {
-        return view('stu.user.show',compact('user'));
+        $oneuser=User::find($id);
+        return view('stu.user.show',compact('oneuser'));
     }
 
     /**

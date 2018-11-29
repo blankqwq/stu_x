@@ -13,10 +13,10 @@ use Illuminate\Support\Facades\Auth;
 class TopicController extends Controller
 {
     /**
-     * Store a newly created resource in storage.
-     *  保存topic
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @param $id
+     * @param TopicRequest $request
+     * @param FileUploadHandler $upload
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function store($id,TopicRequest $request,FileUploadHandler $upload)
     {
@@ -38,40 +38,41 @@ class TopicController extends Controller
     }
 
     /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param $id
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * @throws \Illuminate\Auth\Access\AuthorizationException
      */
     public function show($id)
     {
-        //权限判定
         $topic=Topic::with('replies','sender','type')->find($id);
+        $this->authorize('view',Topic::find($id));
         return view('stu.topic.show',compact('topic'));
     }
 
     /**
-     * Show the form for editing the specified resource.
-     *  编辑topic
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param $id
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * @throws \Illuminate\Auth\Access\AuthorizationException
      */
     public function edit($id)
     {
         //权限判定
         $topic=Topic::with('type','sender')->find($id);
+        $this->authorize('update',$topic);
         return view('stu.topic.edit',compact('topic'));
     }
 
     /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param TopicRequest $request
+     * @param $id
+     * @param FileUploadHandler $upload
+     * @return \Illuminate\Http\RedirectResponse
+     * @throws \Illuminate\Auth\Access\AuthorizationException
      */
     public function update(TopicRequest $request,$id,FileUploadHandler $upload)
     {
+        $topic=Topic::find($id);
+        $this->authorize('update',$topic);
         //权限判定
         $input=$request->only('title','type_id','content','can_reply','level');
         $input['user_id']=Auth::id();
@@ -84,19 +85,19 @@ class TopicController extends Controller
             }
         }
         $input['content']=clean($input['content']);
-        Topic::find($id)->update($input);
+        $topic->update($input);
         return redirect(route('classes.show',$id))->with('success','修改成功');
 
     }
 
     /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param $id
+     * @throws \Illuminate\Auth\Access\AuthorizationException
      */
     public function destroy($id)
     {
+        $topic=Topic::find($id);
+        $this->authorize('update',$topic);
         //权限判定
 
     }
