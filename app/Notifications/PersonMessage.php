@@ -64,7 +64,7 @@ class PersonMessage extends Notification
 
     public function toDatabase($notifiable)
     {
-        if ($this->user!=0)
+        if ($this->user)
             return [
             'user_id'=>$this->user->id,
             'user_name'=>$this->user->name,

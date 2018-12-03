@@ -176,7 +176,7 @@ class ClassController extends Controller
      * @param Request $request
      * @return string
      */
-    public function agree(Request $request,$id,$message){
+    public function agree(Request $request,$id,$message=null){
 
         $classe = Classes::find($id);
         $classe->update(['user_allow' => Auth::id()]);
@@ -191,7 +191,7 @@ class ClassController extends Controller
      * @param Request $request
      * @return string
      */
-    public function disagree(Request $request,$id,$message){
+    public function disagree(Request $request,$id,$message=null){
         try {
             $classe = Classes::find($id);
             $classe->update(['user_allow' => 0]);

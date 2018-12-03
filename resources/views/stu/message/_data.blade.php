@@ -26,7 +26,7 @@
                         <div class="infos">
                             <div class="box-header">
                                 <a href="{{ route('users.show', $notification->data['user_id']) }}">{{ $notification->data['user_name'] }}</a>
-                                {{$notification->data['content']}}
+                                {!! $notification->data['content'] !!}
                                 <span class="meta pull-right" title="{{ $notification->created_at }}">
                                 <span class="glyphicon glyphicon-clock" aria-hidden="true"></span>
                                 {{ $notification->created_at->diffForHumans() }}
@@ -37,7 +37,7 @@
                     <hr>
                 @endforeach
                 @if(isset($notifications))
-                    {{$notifications->links()}}
+                    {{$notifications->appends(['tab'=>'pm'])->links()}}
                 @endif
             </div>
         </div>

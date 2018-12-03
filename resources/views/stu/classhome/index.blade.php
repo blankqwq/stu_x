@@ -130,7 +130,7 @@
         @if(if_query('tab', 'need'))
             @include('stu.classhome._data', ['datas' => $classe->needs()->with('replies')->recent()->paginate(10)])
         @elseif(if_query('tab', 'file'))
-            @include('stu.classhome._file', ['files' => ''])
+            @include('stu.classhome._file', ['files' => $classe->files()->where('pid',0)->paginate(10)])
         @elseif(if_query('tab', 'live'))
             @include('stu.classhome._live', ['lives' =>''])
         @elseif(if_query('tab', 'chart'))

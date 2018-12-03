@@ -45,6 +45,13 @@ Route::group(['middleware' => 'auth','namespace'=>'Stu'], function () {
     Route::post('classuser/{id}/agree/{message?}','ClassUserController@agree')->name('classuser.agree');
     Route::post('classuser/{id}/disagree/{message?}','ClassUserController@disagree')->name('classuser.disagree');
 
+    Route::get('classes/{id}/file/{file}', 'ClassesFileController@show')->name('classes.file.show');
+    //创建
+    Route::post('classes/{id}/filesystem/folder/{file}','ClassesFileController@storefolder')->name('classes.file.storefolder');
+    Route::post('classes/{id}/filesystem/file/{file}','ClassesFileController@storefile')->name('classes.file.storefile');
+    //删除
+    Route::delete('classes/{id}/filesystem/del','ClassesFileController@destroy')->name('classes.file.destroy');
+
 
     Route::post('classes/{id}/join','ClassUserController@store')->name('classuser.store');
     Route::get('classes/{id}/join','ClassUserController@create')->name('classes.joining');
@@ -69,8 +76,17 @@ Route::group(['middleware' => 'auth','namespace'=>'Stu'], function () {
 
     Route::get('messages','MessageController@index')->name('messages.index');
     Route::get('messages/{id}','MessageController@ignore')->name('messages.ignore');
+    Route::post('messages','MessageController@store')->name('messages.store');
+
+    Route::resource('files', 'FileController',['only'=>['index','show','create','store','edit','update']]);
 
 
-    Route::resource('flies', 'FileController',['only'=>['index','show','create','store','edit','update']]);
+    Route::delete('files/del','FileController@destroy');
+    Route::post('files/new/folder/{id}','FileController@storefolder');
+    Route::post('files/update/file/{id}','FileController@storefile');
+    Route::get('classfile','FileController@classfile')->name('classfile.index');
+
+
+
 
 });

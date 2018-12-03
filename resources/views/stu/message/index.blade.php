@@ -70,8 +70,8 @@
                     </div>
                     <div class="box-body no-padding">
                         <ul class="nav nav-pills nav-stacked">
-                            <li class="{{ active_class(if_query('tab', 'homework')) }}">
-                                <a href="{{ route('messages.index', ['tab' => 'homework']) }}">
+                            <li class="{{ active_class(if_query('tab', 'send')) }}">
+                                <a href="{{ route('messages.index', ['tab' => 'send']) }}">
                                     <i class="fa fa-circle-o text-red"></i> 发送私信
                            </a></li>
                         </ul>
@@ -113,6 +113,8 @@
         @elseif(if_query('tab', 'reply'))
             @include('stu.message._reply', ['notifications' => $user->notifications()->where('type',
             \App\Notifications\TopicReplied::class)->paginate(5)])
+        @elseif(if_query('tab', 'send'))
+            @include('stu.message._send',['datas'=>\Illuminate\Support\Facades\Auth::user()->classes()->with('student', 'creator')->get()])
         @else
             @include('stu.message._notice', ['notifications' => $user->notifications()->where('type',
             \App\Notifications\ClassCreate::class)->paginate(5)])

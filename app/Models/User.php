@@ -2,6 +2,9 @@
 
 namespace App\Models;
 
+use App\Notifications\ClassCreate;
+use App\Notifications\NewStuJinClass;
+use Carbon\Carbon;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Support\Collection;
@@ -85,6 +88,17 @@ class User extends Authenticatable
     public function isClassOf($id)
     {
         return $this->classes()->wherePivot('class_id',$id)->count()>0;
+    }
+
+    /**
+     * 设定已阅读的的文章
+     */
+    public function markAsRead()
+    {
+        $this->notification_count = 0;
+        $this->save();
+        $this->unreadNotifications()->where('type','<>',NewStuJinClass::class)->where('type','<>',ClassCreate::class)
+            ->update(['read_at' => Carbon::now()]);
     }
 
 }

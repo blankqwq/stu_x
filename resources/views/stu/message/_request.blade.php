@@ -70,8 +70,6 @@
                                             class="label label-success">通过</span></a>
                                 <a href="{{route('classuser.disagree',[$notification->data['classuser_id'],$notification->id])}}" id="func"><span
                                             class="label label-danger">不通过</span></a>
-                                <a href="{{route('messages.ignore',$notification->id)}}" id="func"><span
-                                            class="label label-warning">忽略</span></a>
                             </div>
                             @endif
                         </div>
@@ -79,7 +77,7 @@
                     <hr>
                 @endforeach
                 @if(isset($notifications))
-                    {{$notifications->links()}}
+                    {{$notifications->appends(['tab'=>'request'])->links()}}
                 @endif
             </div>
         </div>

@@ -10,6 +10,8 @@ namespace App\Handlers;
 
 
 use App\Models\Classes;
+use App\Models\Homework;
+use App\Models\StuHomework;
 
 class Util
 {
@@ -35,5 +37,18 @@ class Util
         $content="你好，管理员不同意你加入".$classes->name."团体";
         return $content;
     }
+
+    public static function putFraction(StuHomework $homework){
+        $name=Homework::find($homework->homework_id)->title;
+        $content="你好，你的作业《".$name."》分数为".$homework->fraction."分_(努力学习，刻意精进)";
+        return $content;
+    }
+
+    public static function makeJoinMessage(Classes $classes,$content){
+        $content=clean($content);
+        $content="你好，我已经加入了你的".$classes->name."团体(消息：$content)";
+        return $content;
+    }
+
 
 }

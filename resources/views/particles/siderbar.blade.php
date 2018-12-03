@@ -103,7 +103,7 @@
                 {{--</a>--}}
             {{--</li>--}}
 
-            <li class="treeview  @yield('files')">
+            <li class="treeview  {{active_class(if_route('files.index'))}}">
                 <a href="#">
                     <i class="fa fa-folder"></i> <span>文件管理</span>
                     <span class="pull-right-container">
@@ -111,8 +111,8 @@
             </span>
                 </a>
                 <ul class="treeview-menu">
-                    <li class="@yield('files-class')"><a href="/classfile"><i class="fa fa-circle-o"></i> 班级文件</a></li>
-                    <li class="@yield('files-me')"><a href="/filesystem"><i class="fa fa-circle-o"></i> 我的文件</a></li>
+                    <li class=" {{active_class(if_route('classfile.index'))}}"><a href="{{route('classfile.index')}}"><i class="fa fa-circle-o"></i> 班级文件</a></li>
+                    <li class=" {{active_class(if_route('files.index'))}}"><a href="{{route('files.index')}}"><i class="fa fa-circle-o"></i> 我的文件</a></li>
                 </ul>
             </li>
             @role(config('code.role'))
