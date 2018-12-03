@@ -53,7 +53,7 @@ class HomeworkController extends Controller
      */
     public function show($id)
     {
-        $this->authorize('view',$id);
+        $this->authorize('view',Homework::find($id));
         $homework=Homework::with('publisher','classes','posters')->find($id);
         return view('stu.homework.show',compact('homework'));
     }

@@ -44,7 +44,7 @@
                     <hr>
                 @endforeach
                 @if(isset($notifications))
-                    {{$notifications->links()}}
+                    {{$notifications->appends(['tab'=>'reply'])->links()}}
                 @endif
             </div>
         </div>

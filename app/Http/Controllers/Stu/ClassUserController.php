@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers\Stu;
 
+use App\Handlers\Util;
 use App\Http\Requests\ClassUserRequest;
 use App\Models\Classes;
 use App\Models\ClassUser;
 use App\Models\User;
+use App\Notifications\PersonMessage;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -52,13 +54,18 @@ class ClassUserController extends Controller
         $data['user_id']=Auth::id();
         if ($classe->verification)
             $data['token']=$request->input('content');
-        else
+        else{
             $data['token']=null;
+        }
+
         if (!empty($classe->password)){
             if ($classe->password !== $request->input('password'))
                 return redirect(route('classuser.create',$id))->with('danger','密码错误');
         }
         ClassUser::create($data);
+        if ($data['token']==null)
+            Classes::find($data['class_id'])->creator->notify(new PersonMessage(Auth::user(),
+                Util::makeJoinMessage(Classes::find($data['class_id']),$request->input('content'))));
         return redirect(route('classes.joining',$id))->with('success','申请成功');
     }
 

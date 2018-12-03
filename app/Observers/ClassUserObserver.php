@@ -20,17 +20,24 @@ class ClassUserObserver
 {
     //
     public function saved(ClassUser $classUser){
-        User::find($classUser->user_id)->notify(new PersonMessage(0,Util::makeOkJoin(Classes::find($classUser->class_id))));
+
     }
 
     public function updated(ClassUser $classUser){
-        if ($classUser->token==0)
+        //发送信息
+        if ($classUser->token==null){
+            Classes::find($classUser->class_id)->increment('numbers', 1);
+            User::find($classUser->user_id)->notify(new PersonMessage(0,Util::makeOkJoin(Classes::find($classUser->class_id))));
+        }
+        if ($classUser->token==0){
             User::find($classUser->user_id)->notify(new PersonMessage(0,Util::makeNoJoin(Classes::find($classUser->class_id))));
+        }
     }
 
     //信息通知创始人是否同意加入团体
     public function created(ClassUser $classUser){
-        Classes::find($classUser->class_id)->creator->notify(new NewStuJinClass($classUser));
+        if ($classUser->token!=null)
+            Classes::find($classUser->class_id)->creator->notify(new NewStuJinClass($classUser));
     }
 
 }

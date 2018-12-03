@@ -80,7 +80,7 @@ class StuHomeworkController extends Controller
     {
         if ($request->hasFile('attachment')) {
             $file = $request->attachment;
-            $filename=Auth::user()->getinfo()->first()->name.date("Y/m/d").$file->getClientOriginalName();
+            $filename=Auth::user()->name.date("Y/m/d").$file->getClientOriginalName();
             $res = Storage::disk('qiniu')->put($filename, file_get_contents($file->getRealPath()));
             if ($res){
                 $ret=Storage::disk('qiniu')->downloadUrl($filename)->setDownload($filename);
