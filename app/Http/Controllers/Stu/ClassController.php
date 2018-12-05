@@ -2,15 +2,18 @@
 
 namespace App\Http\Controllers\Stu;
 
+use App\Console\Commands\ChartWServer;
 use App\Handlers\ImageUploadHandler;
 use App\Http\Requests\ClassRequest;
 use App\Models\Classes;
 use App\Models\ClassType;
 use App\Models\TopicType;
 use App\Models\User;
+use App\WebSocket\Ws;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Spatie\Permission\Models\Role;
@@ -99,14 +102,15 @@ class ClassController extends Controller
     public function show($id)
     {
 
-        $classe=Classes::with('creator','type')->find($id);
+        $classe=Classes::with('creator','type')->where('user_allow','>',0)->find($id);
         //判断权限
+        if (!$classe)
+           return redirect(route('classes.my'))->with('danger','该班级未通过审核或不存在');
         $this->authorize('view',$classe);
         $types=TopicType::all();
         $count_homework=Classes::find($id)->homeworks()->count();
         $count_notice=Classes::find($id)->notices()->count();
         $count_need=Classes::find($id)->needs()->count();
-
         return view('stu.classhome.index',compact('classe','count_need','count_notice','count_homework','types'));
     }
 
@@ -136,7 +140,7 @@ class ClassController extends Controller
      */
     public function users($id){
         $users=Classes::find($id)->student()->paginate(15);
-        return view('stu.user.table',compact('users'));
+        return view('stu.user.table',compact('users','id'));
     }
 
     /**

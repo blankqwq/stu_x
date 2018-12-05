@@ -79,12 +79,19 @@
                                         <td>{{$classe->creator->email }}</td>
                                         <td><a href="{{route('classes.small',$classe->id)}}" id="read"><span
                                                         class="label label-warning">查看</span></a>
-                                            <a href="{{ route('classes.users',$classe->id) }}"><span
-                                                        class="label label-success">成员查看</span>
-                                            </a>
-                                            <a href="{{ route('classes.show',$classe->id) }}"><span
-                                                        class="label label-danger">{{$classe->type->category}}主页</span>
-                                            </a>
+                                            @if($classe->user_allow==null ||$classe->user_allow==0 )
+
+                                                <a href="#"><span
+                                                            class="label label-danger">未通过审核</span>
+                                                </a>
+                                            @else
+                                                <a href="{{ route('classes.users',$classe->id) }}"><span
+                                                            class="label label-success">成员查看</span>
+                                                </a>
+                                                <a href="{{ route('classes.show',$classe->id) }}"><span
+                                                            class="label label-danger">{{$classe->type->category}}主页</span>
+                                                </a>
+                                            @endif
                                         </td>
                                     </tr>
                                 @endforeach

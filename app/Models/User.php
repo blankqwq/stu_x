@@ -101,4 +101,8 @@ class User extends Authenticatable
             ->update(['read_at' => Carbon::now()]);
     }
 
+    public function chart(){
+        return $this->morphMany(Chart::class,'chart');
+    }
+
 }

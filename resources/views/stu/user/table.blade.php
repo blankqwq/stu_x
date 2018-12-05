@@ -79,12 +79,23 @@
                                         <td>{{ $one->sex }}</td>
                                         <td>{{ $one->email }}</td>
                                         <td>{{ $one->created_at }}</td>
-                                        <td>{{ $user->updated_at }}</td>
+                                        <td>{{ $one->updated_at }}</td>
                                         <td><a href="{{route('users.small',$one->id)}}" id="read"><span
                                                         class="label label-warning">查看</span></a>
-                                            <a href="/permissions/{{ $one->id }}"><span
-                                                        class="label label-success">权限</span>
+                                            @role(config('code.role').'|class'.$id)
+                                            @if(!$one->hasRole('|class'.$id))
+                                            <a href="/permissions/{{ $one->id }}">
+                                                <span class="label label-success">设置为管理权限</span>
                                             </a>
+                                            @else
+                                                @if(!($user->id === $one->id))
+                                                <a href="/permissions/{{ $one->id }}">
+                                                    <span class="label label-danger">取消管理员权限</span>
+                                                </a>
+                                                @endif
+                                            @endif
+
+                                            @endrole
                                         </td>
                                     </tr>
                                 @endforeach

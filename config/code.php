@@ -7,5 +7,6 @@
  */
 
 return [
-    'role'=>'admin|master'
+    'role'=>'admin|master',
+    'timeOut'=>5,
 ];
