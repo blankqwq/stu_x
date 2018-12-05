@@ -59,4 +59,7 @@ class Classes extends Model
         return $this->hasMany(Topic::class,'class_id','id')->where('type_id',2);
     }
 
+    public function chart(){
+        return $this->morphMany(Chart::class,'chart');
+    }
 }

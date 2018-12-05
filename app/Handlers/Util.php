@@ -12,6 +12,9 @@ namespace App\Handlers;
 use App\Models\Classes;
 use App\Models\Homework;
 use App\Models\StuHomework;
+use App\Models\User;
+use App\WebSocket\Predis;
+use Carbon\Carbon;
 
 class Util
 {
@@ -48,6 +51,34 @@ class Util
         $content=clean($content);
         $content="你好，我已经加入了你的".$classes->name."团体(消息：$content)";
         return $content;
+    }
+
+    public static function getJson($message){
+        $user=User::find($message['user_id']);
+        if ($message['type']=='message')
+            $data=[
+                'avatar'=>$user->avatar,
+                'name'=>$user->name,
+                'content'=>$message['content'],
+                'type'=>$message['type'],
+                'class_id'=>$message['class_id'],
+                'created_at'=>Carbon::now()->toTimeString()
+            ];
+        if ($message['type']=='connect')
+            $data=[
+                'name'=>$user->name,
+                'type'=>$message['type'],
+                'class_id'=>$message['class_id'],
+                'created_at'=>Carbon::now()->toTimeString()
+            ];
+        if ($message['type']=='quit')
+            $data=[
+                'name'=>$user->name,
+                'type'=>$message['type'],
+                'class_id'=>$message['class_id'],
+                'created_at'=>Carbon::now()->toTimeString()
+            ];
+        return json_encode($data);
     }
 
 
