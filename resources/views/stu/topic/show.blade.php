@@ -1,4 +1,29 @@
-<div class="box box-primary">
+<div class="col-md-9" >
+    <script>
+        $(document).ready(function () {
+            $('[id=read]').click(function () {
+                htmlobj = $.ajax(
+                    {
+
+                        type: "GET",
+                        url: this.href,
+                        success: function () {
+                            $("html,body").animate({scrollTop: 0}, 800);
+                            var data = htmlobj.responseText;
+                            $('#home-content').empty();
+                            $("#home-content").html(htmlobj.responseText);
+                        },
+                        error: function () {
+                            alert('获取失败联系管理员')
+                        }
+
+                    });
+                return false;
+            });
+        });
+    </script>
+
+    <div class="box box-primary">
     <div class="box-header with-border">
         <h3 class="box-title">查看详细</h3>
 
@@ -9,7 +34,6 @@
                         class="fa fa-chevron-right"></i></a>
         </div>
     </div>
-    <!-- /.box-header -->
     <div class="box-body no-padding">
         <div class="mailbox-read-info">
             <h3>{{$topic->title}}</h3>
@@ -25,8 +49,8 @@
                     <i class="fa fa-trash-o"></i></button>
             </div>
             <!-- /.btn-group -->
-            <button type="button" class="btn btn-default btn-sm" data-toggle="tooltip" title="编辑" onclick="window.location.href=''">
-                <i class="fa fa-edit"></i></button>
+            <a type="button" class="btn btn-default btn-sm" href="{{route('topics.edit',$topic->id)}}" data-toggle="tooltip" title="编辑" id="read">
+                <i class="fa fa-edit"></i></a>
         </div>
         <!-- /.mailbox-controls -->
         <div class="mailbox-read-message">
@@ -150,4 +174,5 @@
 
     {{--@if($topic->)--}}
     {{--@endif--}}
+</div>
 </div>

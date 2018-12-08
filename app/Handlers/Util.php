@@ -12,6 +12,7 @@ namespace App\Handlers;
 use App\Models\Classes;
 use App\Models\Homework;
 use App\Models\StuHomework;
+use App\Models\Topic;
 use App\Models\User;
 use App\WebSocket\Predis;
 use Carbon\Carbon;
@@ -81,5 +82,18 @@ class Util
         return json_encode($data);
     }
 
+
+    public static function getoutClass(Classes $classe){
+        $content="你好，管理员已将你移除".$classe->name."团体";
+        return $content;
+    }
+
+    public static function putTopic(Classes $classes,Topic $topic){
+        if ($topic->type_id === 1)
+            $content="你好，你的".$classes->name."团体,发送了一个公告《".$topic->title."》";
+        else
+            $content="你好，你的".$classes->name."团体,发送了一个需求《".$topic->title."》";
+        return $content;
+    }
 
 }

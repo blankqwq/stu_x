@@ -57,6 +57,11 @@
                             </form>
                         </div>
                     </div>
+                    @if(isset($id))
+                        <form action="{{route('classuser.destroy',$id)}}" method="post">
+                            {{csrf_field()}}
+                            {{method_field('delete')}}
+                    @endif
                     <div class="box-body table-responsive no-padding">
                             <table class="table table-hover">
                                 <tr>
@@ -68,12 +73,10 @@
                                     <th>更新事件</th>
                                     <th>操作</th>
                                 </tr>
-                                {{ csrf_field() }}
-                                {{ method_field('delete') }}
                                 @foreach($users as $one)
                                     <tr>
-                                        <td>@if(\Illuminate\Support\Facades\Auth::id()!==$user->id)
-                                                <input type="checkbox" value="{{ $user->id }}" name="ids[]">
+                                        <td>@if($user->id!==$one->id)
+                                                <input type="checkbox" value="{{ $one->id }}" name="ids[]">
                                             @endif</td>
                                         <td>{{ $one->name }}</td>
                                         <td>{{ $one->sex }}</td>
@@ -104,20 +107,24 @@
                                 @endif
 
                             </table>
+                            <div class="box-footer">
+                                @if(isset($id))
 
-                            {{--<div class="box-footer">--}}
-                                {{--<button class="btn btn-google btn-sm ">删除用户</button>--}}
-                                {{--<ul class="pagination pagination-sm no-margin pull-right">--}}
-                                    {{--{{ $users->links() }}--}}
-                                {{--</ul>--}}
-                            {{--</div>--}}
+                                @role(config('code.role').'|class'.$id)
+                                <button class="btn btn-google btn-sm ">删除用户</button>
+                                @endrole
+                                @endif
+                                <ul class="pagination pagination-sm no-margin pull-right">
+                                    {{ $users->links() }}
+                                </ul>
+                            </div>
                     </div>
+                    </form>
                 </div>
             </div>
             <div class="col-md-4" id="users-content">
 
             </div>
-            <!-- 模态框（Modal） -->
 
         </div>
 

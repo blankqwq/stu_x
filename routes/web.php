@@ -27,6 +27,8 @@ Route::group(['middleware' => 'auth','namespace'=>'Stu'], function () {
     Route::get('topics/{topics}','TopicController@show')->name('topics.show');
     Route::get('topics/{topics}/edit','TopicController@edit')->name('topics.edit');
     Route::put('topics/{topics}','TopicController@update')->name('topics.update');
+    Route::delete('topics','TopicController@destroy')->name('topics.destroy');
+
 
 
     Route::post('classes/{id}/homework','HomeworkController@store')->name('homework.store');
@@ -44,6 +46,11 @@ Route::group(['middleware' => 'auth','namespace'=>'Stu'], function () {
     Route::get('classuser','ClassUserController@index')->name('classuser.index');
     Route::post('classuser/{id}/agree/{message?}','ClassUserController@agree')->name('classuser.agree');
     Route::post('classuser/{id}/disagree/{message?}','ClassUserController@disagree')->name('classuser.disagree');
+    Route::delete('classuser/{class}','ClassUserController@destroy')->name('classuser.destroy');
+
+
+
+
 
     Route::get('classes/{id}/file/{file}', 'ClassesFileController@show')->name('classes.file.show');
     //创建
@@ -85,6 +92,16 @@ Route::group(['middleware' => 'auth','namespace'=>'Stu'], function () {
     Route::post('files/new/folder/{id}','FileController@storefolder');
     Route::post('files/update/file/{id}','FileController@storefile');
     Route::get('classfile','FileController@classfile')->name('classfile.index');
+
+
+
+    //动态获取一些信息
+    Route::get('message/pm', 'MessageController@getpm')->name('messages.pm');
+    //动态获取班级中的需求什么的，自动获取追后一个
+    Route::get('message/reply', 'MessageController@getreply')->name('messages.reply');
+    //动态获取申请的信息，
+    Route::get('message/request', 'MessageController@getrequest')->name('messages.request');
+
 
 
 

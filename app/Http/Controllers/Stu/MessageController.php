@@ -37,4 +37,23 @@ class MessageController extends Controller
             clean($request->input('content'))));
         return redirect(route('messages.index'))->with('success','发送');
     }
+
+
+    public function getpm(){
+        $messages=Auth::user()->notifications()->where('type',PersonMessage::class)->where('read_at',null)->take(5)->get();
+        $message_number=Auth::user()->notifications()->where('type',PersonMessage::class)->where('read_at',null)->count();
+        return view('stu.message.smallpm',compact('messages','message_number'));
+    }
+
+    public function getrequest(){
+        $messages=Auth::user()->notifications()->where('type',NewStuJinClass::class)->where('read_at',null)->take(5)->get();
+        $message_number=Auth::user()->notifications()->where('type',NewStuJinClass::class)->where('read_at',null)->count();
+        return view('stu.message.smallre',compact('messages','message_number'));
+    }
+
+    public function getreply(){
+        $messages=Auth::user()->notifications()->where('type',TopicReplied::class)->where('read_at',null)->take(5)->get();
+        $message_number=Auth::user()->notifications()->where('type',TopicReplied::class)->where('read_at',null)->count();
+        return view('stu.message.smallpy',compact('messages','message_number'));
+    }
 }

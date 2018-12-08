@@ -199,6 +199,7 @@ class ClassController extends Controller
         try {
             $classe = Classes::find($id);
             $classe->update(['user_allow' => 0]);
+
             if ($message!="")
                 Auth::user()->unreadNotifications()->where('id',$message)->update(['read_at' => Carbon::now()]);
         } catch (\Exception $exception) {

@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Models\Traits\HomeworkHelper;
 use App\Notifications\ClassCreate;
 use App\Notifications\NewStuJinClass;
 use Carbon\Carbon;
@@ -13,6 +14,7 @@ use Spatie\Permission\Traits\HasRoles;
 
 class User extends Authenticatable
 {
+    use HomeworkHelper;
     use Notifiable {
         notify as protected laraNotify;
     }
@@ -32,7 +34,7 @@ class User extends Authenticatable
      * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
      */
     public function classes(){
-        return $this->belongsToMany(Classes::class,'class_users','user_id','class_id')->wherePivot('token', null);;
+        return $this->belongsToMany(Classes::class,'class_users','user_id','class_id')->wherePivot('token', null);
     }
 
     /**
@@ -103,6 +105,10 @@ class User extends Authenticatable
 
     public function chart(){
         return $this->morphMany(Chart::class,'chart');
+    }
+
+    public function stuhomeworks(){
+        return $this->hasMany(StuHomework::class,'user_id','id');
     }
 
 }

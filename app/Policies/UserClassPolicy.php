@@ -27,7 +27,6 @@ class UserClassPolicy
      * @return bool
      */
     public function view(User $user,Classes $classes){
-
         return $user->isClassOf($classes->id) || $user->hasRole(config('code.role'));
     }
 

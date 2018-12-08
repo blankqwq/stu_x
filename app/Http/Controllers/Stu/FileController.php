@@ -116,6 +116,7 @@ class FileController extends Controller
     }
 
     public function classfile(){
-
+        $classes=Auth::user()->classes()->with('creator','homeworks')->paginate(15);
+        return view('stu.file.classes',compact('classes'));
     }
 }

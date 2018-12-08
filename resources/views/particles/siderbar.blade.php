@@ -103,7 +103,7 @@
                 {{--</a>--}}
             {{--</li>--}}
 
-            <li class="treeview  {{active_class(if_route('files.index'))}}">
+            <li class="treeview  {{active_class(if_route('files.index') || if_route('classfile.index'))}}">
                 <a href="#">
                     <i class="fa fa-folder"></i> <span>文件管理</span>
                     <span class="pull-right-container">
