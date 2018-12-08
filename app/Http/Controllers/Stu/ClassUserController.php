@@ -98,19 +98,30 @@ class ClassUserController extends Controller
     {
         $data=ClassUser::where('token','<>',null)->where('id',$id)->first();
         $data->update(['token'=>0]);
+        $data->delete();
         if ($message!="")
             Auth::user()->unreadNotifications()->where('id',$message)->update(['read_at' => Carbon::now()]);
         return "1";
     }
 
     /**
-     * Remove the specified resource from storage.
-     * 删除学生
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param $id
+     * @param Request $request
+     * @return \Illuminate\Http\RedirectResponse
      */
-    public function destroy($id)
+    public function destroy($class,Request $request)
     {
+        $this->validate($request, [
+            'ids.*' => 'required|exists:class_users,user_id',
+        ]);
+        $ids=$request->input('ids');
+        $classes=Classes::find($class);
+        if ( Auth::user()->can('update',$classes))
+            foreach ($ids as $id){
+                $data=ClassUser::where('class_id',$class)->where('user_id',$id)->first();
+                $data->delete();
+        }
+        return redirect()->back();
 
     }
 }

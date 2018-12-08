@@ -23,9 +23,14 @@ class HomeController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(User $u)
     {
         $user=Auth::user();
-        return view('stu.index',compact('user'));
+        $homework_get = $u->getHomework(Auth::id());
+        $classe=$user->classes()->first();
+        $stuhomework=$user->stuhomeworks()->first();
+        $messages=$user->notification_count;
+        $file=$user->files()->count();
+        return view('stu.index',compact('user','homework_get','classe','file','messages','stuhomework'));
     }
 }

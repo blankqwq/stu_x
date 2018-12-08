@@ -6,6 +6,7 @@ use App\Handlers\FileUploadHandler;
 use App\Http\Requests\TopicRequest;
 use App\Models\Classes;
 use App\Models\Topic;
+use App\Models\TopicType;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
@@ -58,8 +59,9 @@ class TopicController extends Controller
     {
         //权限判定
         $topic=Topic::with('type','sender')->find($id);
+        $types=TopicType::all();
         $this->authorize('update',$topic);
-        return view('stu.topic.edit',compact('topic'));
+        return view('stu.topic.edit',compact('topic','types'));
     }
 
     /**
@@ -91,14 +93,26 @@ class TopicController extends Controller
     }
 
     /**
-     * @param $id
-     * @throws \Illuminate\Auth\Access\AuthorizationException
+     * @param Request $request
+     * @return \Illuminate\Http\RedirectResponse
+     * 删除文章
      */
-    public function destroy($id)
+    public function destroy(Request $request)
     {
-        $topic=Topic::find($id);
-        $this->authorize('update',$topic);
+        $this->validate($request, [
+            'ids.*' => 'required|exists:topics,id',
+        ]);
+        $ids=$request->input('ids');
+        foreach ($ids as $id){
+            $topic=Topic::find($id);
+           if ( Auth::user()->can('update',$topic))
+                $topic->destroy($id);
+        }
+        return redirect()->back();
         //权限判定
 
     }
+
+
+
 }

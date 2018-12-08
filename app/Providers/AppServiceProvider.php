@@ -7,12 +7,14 @@ use App\Models\ClassUser;
 use App\Models\Homework;
 use App\Models\Replies;
 use App\Models\StuHomework;
+use App\Models\Topic;
 use App\Models\User;
 use App\Observers\ClassObserver;
 use App\Observers\ClassUserObserver;
 use App\Observers\HomeworkObserver;
 use App\Observers\ReplyObserver;
 use App\Observers\StuHomeworkObserver;
+use App\Observers\TopicObserver;
 use App\Observers\UserObsevser;
 use Carbon\Carbon;
 use Illuminate\Support\ServiceProvider;
@@ -33,7 +35,7 @@ class AppServiceProvider extends ServiceProvider
         Homework::observe(HomeworkObserver::class);
         StuHomework::observe(StuHomeworkObserver::class);
         Replies::observe(ReplyObserver::class);
-
+        Topic::observe(TopicObserver::class);
         Carbon::setLocale('zh');
     }
 

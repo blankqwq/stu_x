@@ -14,6 +14,9 @@
         </div>
         <!-- /.box-header -->
         @include('layouts.error')
+        <form action="{{route('topics.destroy')}}" method="post">
+            {{method_field('delete')}}
+            {{csrf_field()}}
         <div class="box-body no-padding">
             <div class="mailbox-controls">
                 <!-- Check all button -->
@@ -21,7 +24,7 @@
                             class="fa fa-square-o"></i>
                 </button>
                 <div class="btn-group">
-                    <button type="button" class="btn btn-default btn-sm"><i class="fa fa-trash-o"></i>
+                    <button type="submit" class="btn btn-default btn-sm"><i class="fa fa-trash-o"></i>
                     </button>
 
                 </div>
@@ -41,7 +44,7 @@
                     @if(isset($datas))
                         @forelse ($datas as $data)
                             <tr>
-                                <td><input type="checkbox"></td>
+                                <td><input type="checkbox" name="ids[]" value="{{$data->id}}"></td>
                                 <td class="mailbox-subject"><b><a href="{{route('topics.show',$data->id)}}"
                                                                   id="read">{{$data->title}}</a></b></td>
                                 <td class="mailbox-name"> {!!  mb_substr(strip_tags($data->content),0,30) !!} </td>
@@ -56,8 +59,8 @@
                     @endif
                     </tbody>
                 </table>
-                <!-- /.table -->
             </div>
+
             <!-- /.mail-box-messages -->
         </div>
         <!-- /.box-body -->
@@ -68,19 +71,25 @@
                             class="fa fa-square-o"></i>
                 </button>
                 <div class="btn-group">
-                    <button type="button" class="btn btn-default btn-sm"><i class="fa fa-trash-o"></i>
+                    <button type="submit" class="btn btn-default btn-sm"><i class="fa fa-trash-o"></i>
                     </button>
                 </div>
                 <!-- /.btn-group -->
                 <button type="button" class="btn btn-default btn-sm"><i class="fa fa-refresh"></i></button>
                 <div class="pull-right">
                     @if(isset($datas))
-                    {{$datas->links()}}
+                        @if($datas->first()->type_id==1)
+                            {{$datas->links()}}
+                        @else
+                            {{$datas->appends(['tab'=>'need'])->links()}}
+                        @endif
                     @endif
                 </div>
             </div>
         </div>
+        </form>
     </div>
+
     <!-- /. box -->
 </div>
 </div>

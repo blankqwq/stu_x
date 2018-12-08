@@ -23,13 +23,12 @@ class ClassUserObserver
 
     }
 
-    public function updated(ClassUser $classUser){
+    public function updating(ClassUser $classUser){
         //发送信息
-        if ($classUser->token==null){
+        if ($classUser->token===null){
             Classes::find($classUser->class_id)->increment('numbers', 1);
             User::find($classUser->user_id)->notify(new PersonMessage(0,Util::makeOkJoin(Classes::find($classUser->class_id))));
-        }
-        if ($classUser->token==0){
+        }elseif ($classUser->token===0){
             User::find($classUser->user_id)->notify(new PersonMessage(0,Util::makeNoJoin(Classes::find($classUser->class_id))));
         }
     }
@@ -38,6 +37,13 @@ class ClassUserObserver
     public function created(ClassUser $classUser){
         if ($classUser->token!=null)
             Classes::find($classUser->class_id)->creator->notify(new NewStuJinClass($classUser));
+    }
+
+    public function deleting(ClassUser $classUser){
+        if ($classUser->token===null){
+            Classes::find($classUser->class_id)->decrement('numbers', 1);
+            User::find($classUser->user_id)->notify(new PersonMessage(0,Util::getoutClass(Classes::find($classUser->class_id))));
+        }
     }
 
 }

@@ -15,6 +15,7 @@ use App\Models\User;
 use App\Notifications\ClassCreate;
 use App\Notifications\PersonMessage;
 use Spatie\Permission\Models\Role;
+use Swoole\Exception;
 
 class ClassObserver
 {
@@ -35,10 +36,12 @@ class ClassObserver
     public function updated(Classes $classe){
         if ($classe->user_allow > 0){
             $boss = $classe->creator;
-            $role = Role::create(['name' => 'class'.$classe->id]);
-            $boss->assignRole($role);
+            if (!Role::where('name','class'.$classe->id)->count()>0){
+                $role = Role::create(['name' => 'class'.$classe->id]);
+                $boss->assignRole($role);
+                $boss->classes()->attach($classe->id);
+            }
             //加入班级
-            $boss->classes()->attach($classe->id);
             $boss->notify(new PersonMessage(0,Util::makeOkCreate($classe)));
         }else{
             //提醒一下用户未成功

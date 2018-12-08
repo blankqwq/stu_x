@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 use App\Models\Classes;
+use App\Models\ClassUser;
 use App\Models\Homework;
 use App\Models\Topic;
 use App\Models\User;
@@ -24,6 +25,7 @@ class AuthServiceProvider extends ServiceProvider
         Topic::class=>TopicPolicy::class,
         Classes::class=>UserClassPolicy::class,
         Homework::class=>HomeworkPolicy::class,
+        ClassUser::class=>ClassUser::class,
     ];
 
     /**

@@ -2,6 +2,10 @@
 
 namespace App\Jobs;
 
+use App\Handlers\Util;
+use App\Models\Classes;
+use App\Models\Topic;
+use App\Notifications\PersonMessage;
 use Illuminate\Bus\Queueable;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Queue\InteractsWithQueue;
@@ -12,14 +16,17 @@ class SendNoticeJob implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
+    public $topic;
+    public $class;
     /**
      * Create a new job instance.
      *
      * @return void
      */
-    public function __construct()
+    public function __construct(Topic $topic)
     {
-        //
+        $this->topic=$topic;
+        $this->class=Classes::find($topic->class_id);
     }
 
     /**
@@ -29,6 +36,10 @@ class SendNoticeJob implements ShouldQueue
      */
     public function handle()
     {
-        //
+        $students=$this->class->student()->get();
+
+        foreach ($students as $student){
+            $student->notify(new PersonMessage(0,Util::putTopic($this->class,$this->topic)));
+        }
     }
 }
