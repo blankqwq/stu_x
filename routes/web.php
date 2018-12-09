@@ -26,7 +26,7 @@ Route::group(['middleware' => 'auth','namespace'=>'Stu'], function () {
     Route::post('classes/{id}/topics','TopicController@store')->name('topics.store');
     Route::get('topics/{topics}','TopicController@show')->name('topics.show');
     Route::get('topics/{topics}/edit','TopicController@edit')->name('topics.edit');
-    Route::put('topics/{topics}','TopicController@update')->name('topics.update');
+    Route::put('topics/{topic}','TopicController@update')->name('topics.update');
     Route::delete('topics','TopicController@destroy')->name('topics.destroy');
 
 
