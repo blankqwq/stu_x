@@ -28,7 +28,7 @@ class TopicPolicy
      * @param  \App\Models\User  $user
      * @return mixed
      */
-    public function create(User $user,$id)
+    public function create(User $user)
     {
         //判断当前用户是否具有班级管理权限
 //        return $user->isClassOf($id) && $user->hasRole(config('code.role').'|class'.$id);
@@ -44,7 +44,7 @@ class TopicPolicy
      */
     public function update(User $user, Topic $topic)
     {
-        return $user->isAuthOf($topic) || $user->hasRole(config('code.role'));
+        return $user->isAuthOf($topic) || $user->hasRole(config('code.role').'|class'.$topic->class_id);
     }
 
     /**

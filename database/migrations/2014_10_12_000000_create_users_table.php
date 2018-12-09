@@ -17,7 +17,7 @@ class CreateUsersTable extends Migration
             $table->increments('id');
             $table->string('email')->unique();
             $table->string('name');
-            $table->string('avatar')->default('');
+            $table->string('avatar');
             $table->string('sex',1);
             $table->string('sign')->nullable()->comment('个性签名');
             $table->integer('notification_count')->unsigned()->default(0);

@@ -27,12 +27,19 @@ class UserObsevser
         Cache::forget('user'.Auth::id());
     }
 
-    public function saved()
+    public function saved(User $user)
     {
         Cache::forget('user'.Auth::id());
     }
     public function deleting(){
 
+    }
+
+
+    public function saving(User $user){
+        if(empty($user->avatar)){
+            $user->avatar="";
+        }
     }
 
 }

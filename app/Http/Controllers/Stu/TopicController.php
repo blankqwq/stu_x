@@ -71,14 +71,10 @@ class TopicController extends Controller
      * @return \Illuminate\Http\RedirectResponse
      * @throws \Illuminate\Auth\Access\AuthorizationException
      */
-    public function update(TopicRequest $request,$id,FileUploadHandler $upload)
+    public function update(TopicRequest $request,Topic $topic,FileUploadHandler $upload)
     {
-        $topic=Topic::find($id);
         $this->authorize('update',$topic);
-        //权限判定
         $input=$request->only('title','type_id','content','can_reply','level');
-        $input['user_id']=Auth::id();
-        $input['class_id']=$id;
         if ($request->attachment){
             $result=$upload->save($request->attachment,'attach',Auth::id());
             if ($result){
@@ -88,7 +84,7 @@ class TopicController extends Controller
         }
         $input['content']=clean($input['content']);
         $topic->update($input);
-        return redirect(route('classes.show',$id))->with('success','修改成功');
+        return redirect(route('classes.show',$topic->class_id))->with('success','修改成功');
 
     }
 

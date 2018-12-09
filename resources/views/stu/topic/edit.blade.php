@@ -5,8 +5,9 @@
             </div>
             @include('layouts.error')
 
-            <form action="{{route('topics.store',$topic->class_id)}}" method="post" enctype="multipart/form-data">
+            <form action="{{route('topics.update',$topic)}}" method="post" enctype="multipart/form-data">
                 {{ csrf_field() }}
+                {{method_field('put')}}
                 <div class="box-body">
                     <div class="form-group">
                         <input class="form-control" placeholder="To:" value="To:全体人员" disabled>
