@@ -6,7 +6,15 @@
 
 -----
 图文直播功能暂时还没加上，过几天再加进去
-
+安装方法,
+```
+git clone https://github.com/blankqwq/stu_x.git
+composer install
+```
+启动websocket服务
+```
+php artsian ws:chart-start  
+```
 ---
 18/12/10 
   - 修复文章修改页面\
