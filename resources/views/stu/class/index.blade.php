@@ -100,8 +100,10 @@
                                 @endif
                             </table>
                             <div class="box-footer">
-                                <button class="btn btn-google btn-sm ">删除</button>
+                                {{--<button class="btn btn-google btn-sm ">删除</button>--}}
+                                <ul class="pagination pagination-sm no-margin pull-right">
                                 {{ $classes->links() }}
+                                </ul>
                             </div>
                         </form>
                     </div>

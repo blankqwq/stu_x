@@ -26,19 +26,17 @@ class Topic extends Model
     }
 
     /**
-     * 获取班级信息
-     * @return \Illuminate\Database\Eloquent\Relations\HasOne
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
     public function classes(){
-        return $this->hasOne(Classes::class,'id','class_id');
+        return $this->belongsTo(Classes::class,'class_id','id');
     }
 
     /**
-     * 获取类型信息
-     * @return \Illuminate\Database\Eloquent\Relations\HasOne
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
     public function type(){
-        return $this->hasOne(TopicType::class,'id','type_id');
+        return $this->belongsTo(TopicType::class,'type_id','id');
     }
     //
 }

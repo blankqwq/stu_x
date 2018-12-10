@@ -35,4 +35,8 @@ class UserClassPolicy
         return $user->hasRole(config('code.role').'|class'.$classes->id);
     }
 
+    public function manage(User $user,Classes $classes){
+        return $user->id === $classes->user_id;
+    }
+
 }

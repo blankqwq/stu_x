@@ -22,6 +22,12 @@
             });
         });
     </script>
+    <style>
+        img{
+            height: 100%;
+            width: 100%;
+        }
+    </style>
 
     <div class="box box-primary">
     <div class="box-header with-border">
@@ -52,8 +58,7 @@
             <a type="button" class="btn btn-default btn-sm" href="{{route('topics.edit',$topic->id)}}" data-toggle="tooltip" title="编辑" id="read">
                 <i class="fa fa-edit"></i></a>
         </div>
-        <!-- /.mailbox-controls -->
-        <div class="mailbox-read-message">
+        <div class="mailbox-read-message" >
             {!! $topic->content !!}
         </div>
         <!-- /.mailbox-read-message -->

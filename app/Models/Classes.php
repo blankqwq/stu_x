@@ -10,19 +10,17 @@ class Classes extends Model
 
 
     /**
-     * 班级类型
-     * @return \Illuminate\Database\Eloquent\Relations\HasOne
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
     public function type(){
-        return $this->hasOne(ClassType::class,'id','type_id');
+        return $this->belongsTo(ClassType::class,'type_id','id');
     }
 
     /**
-     * 创建者
-     * @return \Illuminate\Database\Eloquent\Relations\HasOne
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
     public function creator(){
-        return $this->hasOne(User::class,'id','user_id');
+        return $this->belongsTo(User::class,'user_id','id');
     }
 
     /**

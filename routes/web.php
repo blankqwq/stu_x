@@ -16,7 +16,9 @@ Route::get('/home', 'HomeController@index')->name('stu.home');
 
 //登录的路由
 Route::group(['middleware' => 'auth','namespace'=>'Stu'], function () {
-//    Route::post('editor_upload', 'FunctionController@upload');
+    Route::post('editor_upload', 'FunctionController@upload');
+
+
     Route::get('users/search', 'UserController@searchindex')->name('users.search');
     Route::get('users/{user}/small', 'UserController@small')->name('users.small');
     Route::post('users/search', 'UserController@search')->name('users.search');
@@ -104,6 +106,8 @@ Route::group(['middleware' => 'auth','namespace'=>'Stu'], function () {
 
 
 
+    Route::post('permissions/{class}/{id}', 'PermissionsController@giveclass')->name('pers.give');
+    Route::delete('permissions/{class}/{id}', 'PermissionsController@delclass')->name('pers.del');
 
 
 });
