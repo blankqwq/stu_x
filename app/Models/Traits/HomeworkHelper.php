@@ -53,8 +53,6 @@ trait HomeworkHelper
                 }
             }
         }
-        print_r($homework_get);
-
         return $homework_get;
     }
     public function caculateAllHomework(){

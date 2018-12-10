@@ -39,7 +39,7 @@
                         <div id="editer">
                             {!! $topic->content !!}
                         </div>
-                        <textarea id="content" hidden="hidden" name="content"></textarea>
+                        <textarea id="content" hidden="hidden" name="content"> </textarea>
                         <script type="text/javascript" src="{{ asset('admin/wangEditor.min.js') }}"></script>
                         <script type="text/javascript">
                             var E = window.wangEditor

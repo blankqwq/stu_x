@@ -30,15 +30,22 @@ return [
         'name' => [
             'name'    => '分类名',
         ],
-
-        'view_count' => [
-            'title'    => '查看',
-        ],
     ],
     'rules'   => [
         'title' => 'required'
     ],
     'messages' => [
         'name.required' => '请填写分类',
+    ],
+
+    'filters' => [
+        'id' => [
+
+            'title' => ' ID',
+        ],
+        'name' => [
+            'title' => '标题名',
+        ],
+
     ],
 ];

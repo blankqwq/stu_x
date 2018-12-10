@@ -16,6 +16,7 @@ class CreateTopicTypesTable extends Migration
         Schema::create('topic_types', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name')->comment('类型名');
+            $table->boolean('is_main')->default(false)->comment('是否在主页展示');
             $table->timestamps();
         });
     }

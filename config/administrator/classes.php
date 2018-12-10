@@ -91,12 +91,9 @@ return [
         'type' => [
             'title'              => '分类',
             'type'               => 'relationship',
-            'name_field'         => 'name',
-            'search_fields'      => ["CONCAT(id, ' ', name)"],
+            'name_field'         => 'id',
+            'search_fields'      => ["CONCAT(id, ' ', category)"],
             'options_sort_field' => 'id',
-        ],
-        'view_count' => [
-            'title'    => '查看',
         ],
     ],
     'filters' => [
@@ -118,10 +115,13 @@ return [
             'title'              => '分类',
             'type'               => 'relationship',
             'name_field'         => 'category',
+            'autocomplete'       => true,
             'search_fields'      => array("CONCAT(id, ' ', name)"),
             'options_sort_field' => 'id',
         ],
-
+        'numbers' => [
+            'title' => '人数',
+        ],
     ],
     'rules'   => [
         'title' => 'required'

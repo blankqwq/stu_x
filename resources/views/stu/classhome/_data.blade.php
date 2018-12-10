@@ -78,7 +78,7 @@
                 <button type="button" class="btn btn-default btn-sm"><i class="fa fa-refresh"></i></button>
                 <div class="pull-right">
                     @if(isset($datas))
-                        @if($datas->first()->type_id==1)
+                        @if(!if_query('tab', 'need'))
                             {{$datas->links()}}
                         @else
                             {{$datas->appends(['tab'=>'need'])->links()}}

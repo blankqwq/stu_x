@@ -76,10 +76,28 @@ return [
             // 自动补全排序
             'options_sort_field' => 'id',
         ],
+        'classes' => [
+            'title'              => '班级',
+            'type'               => 'relationship',
+            'name_field'         => 'id',
+            'search_fields'      => array("CONCAT(id, ' ', name)"),
+            'options_sort_field' => 'name',
+        ],
+
+        'type' => [
+            'title'              => '分类',
+            'type'               => 'relationship',
+            'name_field'         => 'id',
+            'search_fields'      => array("CONCAT(id, ' ', name)"),
+            'options_sort_field' => 'name',
+        ],
 
         'content'=>[
             'title'    => '内容',
         ],
+
+
+
         'can_reply'=>[
             'title'    => '能否回复',
         ],
@@ -94,16 +112,25 @@ return [
             'type'               => 'relationship',
             'name_field'         => 'name',
             'autocomplete'       => true,
-            'search_fields'      => array("CONCAT(id, ' ', name)"),
+            'search_fields'      => ["CONCAT(id, ' ', name)"],
+
+            // 自动补全排序
             'options_sort_field' => 'id',
         ],
+        'classes' => [
+            'title'              => '班级',
+            'type'               => 'relationship',
+            'name_field'         => 'id',
+            'search_fields'      => array("CONCAT(id, ' ', name)"),
+            'options_sort_field' => 'name',
+        ],
+
         'type' => [
             'title'              => '分类',
             'type'               => 'relationship',
-            'name_field'         => 'category',
-            'autocomplete'       => true,
+            'name_field'         => 'id',
             'search_fields'      => array("CONCAT(id, ' ', name)"),
-            'options_sort_field' => 'id',
+            'options_sort_field' => 'name',
         ],
     ],
     'rules'   => [

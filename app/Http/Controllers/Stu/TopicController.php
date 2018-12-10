@@ -59,7 +59,7 @@ class TopicController extends Controller
     {
         //权限判定
         $topic=Topic::with('type','sender')->find($id);
-        $types=TopicType::all();
+        $types=TopicType::where('is_main',false)->get();
         $this->authorize('update',$topic);
         return view('stu.topic.edit',compact('topic','types'));
     }

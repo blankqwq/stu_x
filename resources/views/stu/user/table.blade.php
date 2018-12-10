@@ -31,6 +31,38 @@
                     });
                 return false;
             });
+            $('[id=send]').click(function () {
+                htmlobj2 = $.ajax(
+                    {
+                        type: "POST",
+                        url: this.href,
+                        data:{'_token':'{{csrf_token()}}'},
+                        success: function () {
+                            console.log('ok')
+                        },
+                        error: function () {
+                            alert('获取失败联系管理员')
+                        }
+
+                    });
+                return false;
+            })
+            $('[id=dele]').click(function () {
+                htmlobj2 = $.ajax(
+                    {
+                        type: "POST",
+                        url: this.href,
+                        data:{'_token':'{{csrf_token()}}','_method':'delete'},
+                        success: function () {
+                            console.log('ok')
+                        },
+                        error: function () {
+                            alert('获取失败联系管理员')
+                        }
+
+                    });
+                return false;
+            })
         });
     </script>
 
@@ -57,7 +89,7 @@
                             </form>
                         </div>
                     </div>
-                    @if(isset($id))
+                    @if(isset($id) && $id!==null)
                         <form action="{{route('classuser.destroy',$id)}}" method="post">
                             {{csrf_field()}}
                             {{method_field('delete')}}
@@ -85,20 +117,22 @@
                                         <td>{{ $one->updated_at }}</td>
                                         <td><a href="{{route('users.small',$one->id)}}" id="read"><span
                                                         class="label label-warning">查看</span></a>
+                                            @if(isset($id) && $id!==null)
                                             @role(config('code.role').'|class'.$id)
                                             @if(!$one->hasRole('|class'.$id))
-                                            <a href="/permissions/{{ $one->id }}">
+                                            <a href="{{route('pers.give',[$id,$one->id])}}" id="send">
                                                 <span class="label label-success">设置为管理权限</span>
                                             </a>
                                             @else
                                                 @if(!($user->id === $one->id))
-                                                <a href="/permissions/{{ $one->id }}">
+                                                <a href="{{route('pers.del',[$id,$one->id])}}" id="dele">
                                                     <span class="label label-danger">取消管理员权限</span>
                                                 </a>
                                                 @endif
                                             @endif
 
                                             @endrole
+                                            @endif
                                         </td>
                                     </tr>
                                 @endforeach
@@ -109,10 +143,10 @@
                             </table>
                             <div class="box-footer">
                                 @if(isset($id))
+                                    @role(config('code.role').'|class'.$id)
+                                    <button class="btn btn-google btn-sm ">删除用户</button>
+                                    @endrole
 
-                                @role(config('code.role').'|class'.$id)
-                                <button class="btn btn-google btn-sm ">删除用户</button>
-                                @endrole
                                 @endif
                                 <ul class="pagination pagination-sm no-margin pull-right">
                                     {{ $users->links() }}

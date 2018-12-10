@@ -111,4 +111,9 @@ class User extends Authenticatable
         return $this->hasMany(StuHomework::class,'user_id','id');
     }
 
+    public function reply(){
+        return $this->hasMany(Replies::class,'user_id','id');
+    }
+
+
 }

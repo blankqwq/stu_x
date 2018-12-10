@@ -107,7 +107,7 @@ class ClassController extends Controller
         if (!$classe)
            return redirect(route('classes.my'))->with('danger','该班级未通过审核或不存在');
         $this->authorize('view',$classe);
-        $types=TopicType::all();
+        $types=TopicType::where('is_main',false)->get();
         $count_homework=Classes::find($id)->homeworks()->count();
         $count_notice=Classes::find($id)->notices()->count();
         $count_need=Classes::find($id)->needs()->count();
