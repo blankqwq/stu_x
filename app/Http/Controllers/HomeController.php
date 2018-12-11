@@ -15,7 +15,7 @@ class HomeController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('auth');
+        $this->middleware('auth',['except'=>'index']);
     }
 
     /**
@@ -23,7 +23,7 @@ class HomeController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(User $u)
+    public function home(User $u)
     {
         $user=Auth::user();
         $homework_get = $u->getHomework(Auth::id());
@@ -32,5 +32,9 @@ class HomeController extends Controller
         $messages=$user->notification_count;
         $file=$user->files()->count();
         return view('stu.index',compact('user','homework_get','classe','file','messages','stuhomework'));
+    }
+
+    public function index(){
+        return view('welcome');
     }
 }
