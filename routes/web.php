@@ -12,7 +12,11 @@
 */
 Auth::routes();
 
-Route::get('/home', 'HomeController@index')->name('stu.home');
+Route::get('/home', 'HomeController@home')->name('stu.home');
+
+Route::get('/', 'HomeController@index')->name('stu.index');
+
+
 
 //登录的路由
 Route::group(['middleware' => 'auth','namespace'=>'Stu'], function () {

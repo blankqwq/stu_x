@@ -5,18 +5,15 @@
         <div class="row">
             <div class="col-md-8 col-md-offset-2">
                 <div class="panel panel-default">
-                    <div class="panel-heading">用户注册</div>
-
+                    <div class="panel-header">
+                        <p class="profile-username text-center" style="margin: 0 0;">用户注册</p></div>
                     <div class="panel-body">
                         <form class="form-horizontal" method="POST" action="{{ route('register') }}">
                             {{ csrf_field() }}
-
                             <div class="form-group{{ $errors->has('name') ? ' has-error' : '' }}">
                                 <label for="name" class="col-md-4 control-label">用户名</label>
-
                                 <div class="col-md-6">
                                     <input id="name" type="text" class="form-control" name="name" value="{{ old('name') }}" required autofocus>
-
                                     @if ($errors->has('name'))
                                         <span class="help-block">
                                         <strong>{{ $errors->first('name') }}</strong>
@@ -77,7 +74,11 @@
                                 <div class="col-md-6">
                                     <input id="captcha" class="form-control" name="captcha" >
 
-                                    <img class="thumbnail captcha" src="{{ captcha_src('flat') }}" onclick="this.src='/captcha/flat?'+Math.random()" title="点击图片重新获取验证码">
+                                    <img class="thumbnail captcha" src="{{ captcha_src('flat') }}"
+                                         style="  margin-bottom: 0px;
+                                                     margin-top: 10px;
+                                                     cursor: pointer;"
+                                         onclick="this.src='/captcha/flat?'+Math.random()" title="点击图片重新获取验证码">
 
                                     @if ($errors->has('captcha'))
                                         <span class="help-block">

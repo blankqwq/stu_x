@@ -27,6 +27,14 @@ return [
             // 字数限制
             'limit' => 50,
         ],
+
+        'school_name' => [
+            'title' => '学校名',
+            'type' => 'text',
+        ],
+
+
+
         'contact_email' => [
             'title' => '联系人邮箱',
             'type' => 'text',
@@ -36,6 +44,15 @@ return [
             'title' => 'SEO - Description',
             'type' => 'textarea',
             'limit' => 250,
+        ],
+
+        'school_logo' => [
+            'title' => '学校logo',
+            'type' => 'image',
+            'naming' => 'random',
+            'location' => public_path() . '/images/',
+            'size'=>2,
+            'height'=>10
         ],
         'seo_keyword' => [
             'title' => 'SEO - Keywords',
@@ -48,6 +65,7 @@ return [
     'rules' => [
         'site_name' => 'required|max:50',
         'contact_email' => 'email',
+        'school_logo'=>'required'
     ],
 
     'messages' => [
@@ -55,19 +73,16 @@ return [
         'contact_email.email' => '请填写正确的联系人邮箱格式。',
     ],
 
-    // 数据即将保持的触发的钩子，可以对用户提交的数据做修改
     'before_save' => function(&$data)
     {
-        // 为网站名称加上后缀，加上判断是为了防止多次添加
         if (strpos($data['site_name'], 'Powered by STU') === false) {
             $data['site_name'] .= ' - Powered by STU';
         }
+        $data['school_logo'] = '/images/'.$data['school_logo'];
     },
 
-    // 你可以自定义多个动作，每一个动作为设置页面底部的『其他操作』区块
     'actions' => [
 
-        // 清空缓存
         'clear_cache' => [
             'title' => '更新系统缓存',
 
