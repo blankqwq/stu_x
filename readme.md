@@ -12,10 +12,17 @@ git clone https://github.com/blankqwq/stu_x.git
 composer install
 ```
 启动websocket服务
+启动websocket服务需要安装的清单
+  - swoole
+  - phpredis
+  - hiredis
 ```
 php artsian ws:chart-start  
 ```
 ---
 18/12/10 
-  - 修复文章修改页面\
+  - 修复文章修改页面
   - administer扩展包使用姿势不对（改正后使用良好）
+18/12/11
+  - 修复无主页
+  - 修复聊天室ws的ip固定
