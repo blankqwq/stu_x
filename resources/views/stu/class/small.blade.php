@@ -31,7 +31,7 @@
                 <b>创建时间：</b> <a class="pull-right">{{ $classe->created_at }}</a>
             </li>
             <li class="list-group-item">
-                <b>创建者</b> <a class="pull-right" href="/users/{{ $classe->creator->id }}"
+                <b>创建者</b> <a class="pull-right" href="{{ route('users.small',$classe->creator->id) }}"
                               id="read">{{ $classe->creator->email }}</a>
             </li>
 

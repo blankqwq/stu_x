@@ -78,7 +78,7 @@ return [
     |
     */
 
-    'locale' => 'en',
+    'locale' => 'zh-CN',
 
     /*
     |--------------------------------------------------------------------------
@@ -179,7 +179,8 @@ return [
 
         Spatie\Permission\PermissionServiceProvider::class,
         \App\Providers\ComposerServiceProvider::class,
-        zgldh\QiniuStorage\QiniuFilesystemServiceProvider::class
+        zgldh\QiniuStorage\QiniuFilesystemServiceProvider::class,
+        Illuminate\Translation\TranslationServiceProvider::class,
 
     ],
 
