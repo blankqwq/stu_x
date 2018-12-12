@@ -14,34 +14,31 @@
 
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     <style>
+        body {
+            font-family: Hiragino Sans GB, "Hiragino Sans GB", Helvetica, "Microsoft YaHei", Arial,sans-serif;
+        }
+
         #side-index{
             border-top-color: #0b97c4;
             border-top-width: 4px;
             box-shadow: 0px 1px 11px 2px rgba(42, 42, 42, 0.1);
+            margin-bottom: 40px;
+            margin-top: 0px;
+
         }
-        footer{
-            position: absolute;
-            bottom: 0;
-            width: 100% ;
-            /* Set the fixed height of the footer here */
+        footer {
+            position: fixed;
+            left: 0px;
+            bottom: 0px;
+            width: 100%;
             height: 60px;
             background-color: #000;
-
-
         }
-        .container {
+        .container{
             padding-right: 15px;
             padding-left: 15px;
-
-        }
-        .container p {
-            margin: 19px 0;
-            color: #c1c1c1;
         }
 
-        .container p a {
-            color: inherit;
-        }
 
     </style>
 </head>
@@ -106,8 +103,8 @@
     </div>
     <footer>
         <div class="container">
-            <p class="pull-left" style="line-height:60px;color: white;margin: 0; ">@blank</p>
-            <p class="pull-right"style="line-height:60px;margin: 0; "><a href="mailto:{{ setting('contact_email') }}" >联系我们</a></p>
+            <p class="pull-left" style="line-height:60px;margin: 0;color: #c1c1c1; ">@blank</p>
+            <p class="pull-right"style="line-height:60px;margin: 0; color: inherit; "><a href="mailto:{{ setting('contact_email') }}" >联系我们</a></p>
         </div>
     </footer>
     <!-- Scripts -->

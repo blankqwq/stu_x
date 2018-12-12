@@ -32,26 +32,18 @@ class UserController extends Controller
         return view('stu.user.show',compact('oneuser'));
     }
 
-    /**
-     * 编辑用户资料
-     * @param User $user
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
-     */
+
     public function edit(User $user)
     {
+        $this->authorize('update',$user);
         //权限判断policy
         return view('stu.user.edit',compact('user'));
     }
 
-    /**
-     * 更换资料
-     * @param UserRequest $request
-     * @param $id
-     * @param ImageUploadHandler $upload
-     * @return \Illuminate\Http\RedirectResponse
-     */
+
     public function update(UserRequest $request,User $user,ImageUploadHandler $upload)
     {
+        $this->authorize('update',$user);
         $datas=$request->only('name','sign');
         $id=$user->id;
         if ($request->avatar) {
@@ -86,8 +78,8 @@ class UserController extends Controller
      * @param User $user
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function small(User $user){
-        $one=$user;
+    public function small($id){
+        $one=User::with('stuhomeworks')->withCount('classes')->find($id);
         return view('stu.user.small',compact('one'));
     }
 

@@ -13,14 +13,14 @@ class ChartWServer extends Command
      *
      * @var string
      */
-    protected $signature = 'ws:chart-start';
+    protected $signature = 'ws:start';
 
     /**
      * The console command description.
      *
      * @var string
      */
-    protected $description = 'Command description';
+    protected $description = '启动ws服务';
 
     /**
      * Create a new command instance.

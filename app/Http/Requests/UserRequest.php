@@ -25,7 +25,7 @@ class UserRequest extends FormRequest
     {
         return [
             'name'=>'required|min:2|max:10',
-            'sign'=>'string|min:2|max:15',
+            'sign'=>'string|min:1|max:35',
             'avatar' => 'mimes:jpeg,bmp,png,gif|dimensions:min_width=200,min_height=200',
         ];
     }

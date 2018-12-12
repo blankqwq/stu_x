@@ -13,14 +13,14 @@
 
         <ul class="list-group list-group-unbordered">
             <li class="list-group-item">
-                <b>平均分</b> <a class="pull-right">分数</a>
+                <b>最近分数</b> <a class="pull-right">{{$one->stuhomeworks()->first()?$one->stuhomeworks()->first()->fraction:"暂无"}}</a>
             </li>
             <li class="list-group-item">
-                <b>已加入的班级</b> <a class="pull-right">数量</a>
+                <b>已加入的班级</b> <a class="pull-right">{{$one->classes_count}}</a>
             </li>
-            <li class="list-group-item">
-                <b>Friends</b> <a class="pull-right">13,287</a>
-            </li>
+            {{--<li class="list-group-item">--}}
+                {{--<b>Friends</b> <a class="pull-right">13,287</a>--}}
+            {{--</li>--}}
         </ul>
         @if(\Illuminate\Support\Facades\Auth::id() === $one->id or \Illuminate\Support\Facades\Auth::user()->can('manage-user'))
             <button class="btn btn-primary btn-block" data-toggle="modal" data-target="#myModal">修改资料</button>

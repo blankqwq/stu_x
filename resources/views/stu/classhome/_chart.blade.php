@@ -3,7 +3,7 @@
 
 
 
-        var wsUrl = "ws://www.blank.stu:9500/?class={{$classe->id}}";
+        var wsUrl = "ws://{{config('code.url')}}:9500/?class={{$classe->id}}";
 
         var websocket = new WebSocket(wsUrl);
         var h=0;
