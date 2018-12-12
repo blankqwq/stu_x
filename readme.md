@@ -21,10 +21,9 @@ php artsian key:generate
 启动websocket服务
 
 ```
-php artsian ws:chart-start  
+php artsian ws:start  
 //后台启动ws服务
-php /root/stu_x/artisan ws:chart-start >> /dev/null 2>&1 &
-
+php /root/stu_x/artisan ws:start >> /dev/null 2>&1 &
 ```
 ---
  - 18/12/10 
