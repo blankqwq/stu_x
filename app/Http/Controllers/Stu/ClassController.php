@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Stu;
 
 use App\Console\Commands\ChartWServer;
+use App\Exceptions\InternalException;
+use App\Exceptions\StuClassException;
 use App\Handlers\ImageUploadHandler;
 use App\Http\Requests\ClassRequest;
 use App\Models\Classes;
@@ -16,6 +18,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Gate;
 use Spatie\Permission\Models\Role;
 
 class ClassController extends Controller
@@ -94,19 +97,13 @@ class ClassController extends Controller
         return redirect(route('classes.my'))->with('success','创建成功');
     }
 
-    /**
-     * @param $id
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
-     * @throws \Illuminate\Auth\Access\AuthorizationException
-     */
+
     public function show($id)
     {
 
         $classe=Classes::with('creator','type')->where('user_allow','>',0)->find($id);
-        //判断权限
-        if (!$classe)
-           return redirect(route('classes.my'))->with('danger','该班级未通过审核或不存在');
-        $this->authorize('view',$classe);
+        if (Gate::denies('view', $classe))
+            throw new StuClassException($id,"你未加入该班级",401);
         $types=TopicType::where('is_main',false)->get();
         $count_homework=Classes::find($id)->homeworks()->count();
         $count_notice=Classes::find($id)->notices()->count();

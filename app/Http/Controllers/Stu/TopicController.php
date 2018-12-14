@@ -57,7 +57,6 @@ class TopicController extends Controller
      */
     public function edit($id)
     {
-        //权限判定
         $topic=Topic::with('type','sender')->find($id);
         $types=TopicType::where('is_main',false)->get();
         $this->authorize('update',$topic);
