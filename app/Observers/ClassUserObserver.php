@@ -35,8 +35,11 @@ class ClassUserObserver
 
     //信息通知创始人是否同意加入团体
     public function created(ClassUser $classUser){
-        if ($classUser->token!=null)
+        if ($classUser->token!==null)
             Classes::find($classUser->class_id)->creator->notify(new NewStuJinClass($classUser));
+        elseif ($classUser->token===null)
+            Classes::find($classUser->class_id)->increment('numbers', 1);
+
     }
 
     public function deleting(ClassUser $classUser){

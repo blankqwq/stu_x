@@ -133,9 +133,9 @@
             @endrole
             <li class="header">LABELS</li>
             @role(config('code.role'))
-            <li><a href="/admin/users"><i class="fa fa-circle-o text-yellow"></i> <span>后台管理</span></a></li>
+            <li><a href="/admin/users"><i class="fa fa-circle-o text-danger"></i> <span>后台管理</span></a></li>
             @endrole
-            <li><a href="#"><i class="fa fa-circle-o text-yellow"></i> <span>Warning</span></a></li>
+            <li class="@yield('error')"><a href="#"><i class="fa fa-circle-o text-yellow"></i> <span>警告</span></a></li>
             <li><a href="#"><i class="fa fa-circle-o text-aqua"></i> <span>Information</span></a></li>
         </ul>
     </section>
