@@ -28,6 +28,7 @@ Route::group(['middleware' => 'auth','namespace'=>'Stu'], function () {
     Route::post('users/search', 'UserController@search')->name('users.search');
     Route::resource('users', 'UserController',['only'=>['index','show','edit','update']]);
 
+    Route::get('topics/create','TopicController@create')->name('topics.create');
 
     Route::post('classes/{id}/topics','TopicController@store')->name('topics.store');
     Route::get('topics/{topics}','TopicController@show')->name('topics.show');
@@ -83,9 +84,9 @@ Route::group(['middleware' => 'auth','namespace'=>'Stu'], function () {
     Route::get('classes/{id}/users', 'ClassController@users')->name('classes.users');
 
 
-    Route::post('reply','ReplyController@store')->name('reply.store');
-    //是否是班级中的人！权限（中间件）
-//    Route::resource('homework', 'HomeworkController',['only'=>['show','create','edit','update']]);
+    Route::post('replies','ReplyController@store')->name('replies.store');
+    Route::delete('replies/{replies}','ReplyController@destroy')->name('replies.destroy');
+
 
     Route::get('messages','MessageController@index')->name('messages.index');
     Route::get('messages/{id}','MessageController@ignore')->name('messages.ignore');

@@ -13,12 +13,11 @@ use Illuminate\Support\Facades\Auth;
 
 class TopicController extends Controller
 {
-    /**
-     * @param $id
-     * @param TopicRequest $request
-     * @param FileUploadHandler $upload
-     * @return \Illuminate\Http\RedirectResponse
-     */
+    public function create(){
+        $types=TopicType::where('is_main',true)->get();
+        return view('stu.topic.create',compact('types'));
+    }
+
     public function store($id,TopicRequest $request,FileUploadHandler $upload)
     {
         //权限保存
@@ -38,11 +37,7 @@ class TopicController extends Controller
 
     }
 
-    /**
-     * @param $id
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
-     * @throws \Illuminate\Auth\Access\AuthorizationException
-     */
+
     public function show($id)
     {
         $topic=Topic::with('replies','sender','type')->find($id);
@@ -50,11 +45,6 @@ class TopicController extends Controller
         return view('stu.topic.show',compact('topic'));
     }
 
-    /**
-     * @param $id
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
-     * @throws \Illuminate\Auth\Access\AuthorizationException
-     */
     public function edit($id)
     {
         $topic=Topic::with('type','sender')->find($id);
@@ -63,13 +53,7 @@ class TopicController extends Controller
         return view('stu.topic.edit',compact('topic','types'));
     }
 
-    /**
-     * @param TopicRequest $request
-     * @param $id
-     * @param FileUploadHandler $upload
-     * @return \Illuminate\Http\RedirectResponse
-     * @throws \Illuminate\Auth\Access\AuthorizationException
-     */
+
     public function update(TopicRequest $request,Topic $topic,FileUploadHandler $upload)
     {
         $this->authorize('update',$topic);
@@ -87,11 +71,7 @@ class TopicController extends Controller
 
     }
 
-    /**
-     * @param Request $request
-     * @return \Illuminate\Http\RedirectResponse
-     * 删除文章
-     */
+
     public function destroy(Request $request)
     {
         $this->validate($request, [
@@ -104,10 +84,5 @@ class TopicController extends Controller
                 $topic->destroy($id);
         }
         return redirect()->back();
-        //权限判定
-
     }
-
-
-
 }

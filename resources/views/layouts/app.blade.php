@@ -57,7 +57,7 @@
 
                     <!-- Branding Image -->
                     <a class="navbar-brand" href="{{ url('/') }}">
-                        {{ setting('site_name', 'stu系统') }}
+                        {{ setting('school_name', 'stu') }}
                     </a>
                 </div>
 
@@ -80,6 +80,16 @@
                                 </a>
 
                                 <ul class="dropdown-menu">
+                                    <li>
+                                        <a href="/home" >
+                                            我的首页
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="/topics/create" >
+                                            编写文章
+                                        </a>
+                                    </li>
                                     <li>
                                         <a href="{{ route('logout') }}"
                                             onclick="event.preventDefault();

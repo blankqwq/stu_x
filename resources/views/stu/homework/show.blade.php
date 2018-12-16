@@ -93,7 +93,7 @@
     </div>
 
 
-    @include('stu.homework._stuhomework',['stuhomeworks'=>$homework->posters])
+    @include('stu.homework._stuhomework',['stuhomeworks'=>$homework->posters->where('user_id',$user->id)])
 
 </div>
 </div>

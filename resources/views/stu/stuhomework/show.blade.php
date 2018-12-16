@@ -28,6 +28,28 @@
                     <input type="text" class="form-control" name="fraction"
                            value="{{ $stuhomework->fraction }}">
                 </div>
+                <div class="form-group">
+                    <label>评语</label>
+                    <div id="editer">
+                        {!! $stuhomework->comment !!}
+                    </div>
+                    <textarea id="content" hidden="hidden" name="comment"> </textarea>
+                    <script type="text/javascript" src="{{ asset('admin/wangEditor.min.js') }}"></script>
+                    <script type="text/javascript">
+                        var E = window.wangEditor
+                        var editor = new E('#editer')
+                        editor.customConfig.uploadFileName = 'myfile'
+                        editor.customConfig.uploadImgServer = '/editor_upload?_token={{csrf_token()}}';
+                        var $text1 = $('#content')
+                        editor.customConfig.onchange = function (html) {
+                            // 监控变化，同步更新到 textarea
+                            $text1.val(html)
+                        }
+                        editor.create()
+                        // 初始化 textarea 的值
+                        $text1.val(editor.txt.html())
+                    </script>
+                </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">关闭
                     </button>

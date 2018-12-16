@@ -19,6 +19,10 @@ use Carbon\Carbon;
 
 class Util
 {
+    public static function  makeData(int $code,string $message){
+        $data=['code'=>$code,'message'=>$message];
+        return json_encode($data);
+    }
 
     public static function makeOkCreate(Classes $classes){
         $content="你好，你的".$classes->name."团体已通过审核";
