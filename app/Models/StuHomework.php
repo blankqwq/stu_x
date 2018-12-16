@@ -6,7 +6,7 @@ namespace App\Models;
 class StuHomework extends Model
 {
     //作业提交的模型
-    protected $fillable=['content','attachment','homework_id','user_id','fraction'];
+    protected $fillable=['content','attachment','homework_id','user_id','fraction','comment'];
 
     public function homework(){
         return $this->belongsTo(Homework::class,'homework_id','id');

@@ -30,6 +30,11 @@
                     <div class="reply-content">
                         {!! $stuhomework->content !!}
                     </div>
+                    <hr>
+                    <div class="reply-content">
+                      <h4 style="color: red">评语:</h4>
+                        {!! $stuhomework->comment !!}
+                    </div>
                 </div>
             </div>
             <hr>

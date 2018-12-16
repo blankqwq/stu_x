@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Stu;
 
+use App\Handlers\Util;
 use App\Models\Homework;
 use App\Models\StuHomework;
 use Illuminate\Http\Request;
@@ -70,10 +71,12 @@ class StuHomeworkController extends Controller
     {
         $stuhomework=StuHomework::find($id);
         $fraction=$request->input('fraction');
+        $comment=$request->input('comment');
         $stuhomework->fraction=$fraction;
+        $stuhomework->comment=clean($comment);
         $stuhomework->save();
         $class_id=$stuhomework->homework->classes->id;
-        return "ok";
+        return Util::makeData(1,"更新成功");
     }
 
     public function upload(Request $request)

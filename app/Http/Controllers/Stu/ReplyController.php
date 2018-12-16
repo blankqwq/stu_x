@@ -24,7 +24,7 @@ class ReplyController extends Controller
         $data['user_id']=Auth::id();
         $data['pid']=0;
         Replies::create($data);
-//        return redirect(route('classes.show',));
+        return redirect()->back()->with('success','评论成功');
     }
 
 
@@ -53,10 +53,13 @@ class ReplyController extends Controller
 
     /**
      * @param Replies $replies
+     * @return \Illuminate\Http\RedirectResponse
      * @throws \Illuminate\Auth\Access\AuthorizationException
      */
     public function destroy(Replies $replies)
     {
        $this->authorize('delete',$replies);
+       $replies->delete();
+        return redirect()->back()->with('success','删除成功');
     }
 }

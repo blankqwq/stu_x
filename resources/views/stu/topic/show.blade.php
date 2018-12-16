@@ -84,7 +84,7 @@
     </div>
     @if($topic->can_reply)
         <div class="reply-box">
-            <form action="{{route('reply.store')}}" method="POST" accept-charset="UTF-8">
+            <form action="{{route('replies.store')}}" method="POST" accept-charset="UTF-8">
                 <input type="hidden" name="_token" value="{{ csrf_token() }}">
                 <input type="hidden" name="topic_id" value="{{ $topic->id }}">
                 <div class="form-group">
@@ -134,9 +134,14 @@
 
                                 {{-- 回复删除按钮 --}}
                                 <span class="meta pull-right">
-                                <a title="删除回复">
-                                <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
-                                </a>
+                                    <form action="{{route('replies.destroy',$reply->id)}}" method="post">
+                                        {{csrf_field()}}
+                                        {{method_field('delete')}}
+                                          <button class="no-border" title="删除">
+                                            <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
+                                          </button>
+                                    </form>
+
                             </span>
                             </div>
                             <div class="reply-content">
@@ -176,8 +181,5 @@
             </div>
         @endforelse
     @endif
-
-    {{--@if($topic->)--}}
-    {{--@endif--}}
 </div>
 </div>

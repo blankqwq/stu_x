@@ -22,8 +22,7 @@
               </span>
             </div>
         </form>
-        <!-- /.search form -->
-        <!-- sidebar menu: : style can be found in sidebar.less -->
+
         <ul class="sidebar-menu" data-widget="tree">
             <li class="header">主菜单</li>
             <li class=" treeview {{active_class(if_route('stu.home'))}} ">
@@ -78,31 +77,6 @@
                     <li class=" {{active_class(if_route('messages.index'))}}"><a href="{{route('messages.index')}}"><i class="fa fa-circle-o"></i> 消息通知</a></li>
                 </ul>
             </li>
-
-            {{--<li class="treeview">--}}
-                {{--<a href="#">--}}
-                    {{--<i class="fa fa-table"></i> <span>答题系统</span>--}}
-                    {{--<span class="pull-right-container">--}}
-              {{--<i class="fa fa-angle-left pull-right"></i>--}}
-            {{--</span>--}}
-                {{--</a>--}}
-                {{--<ul class="treeview-menu">--}}
-                    {{--<li><a href="pages/tables/simple.html"><i class="fa fa-circle-o"></i> 最近任务</a></li>--}}
-                    {{--<li><a href="pages/tables/simple.html"><i class="fa fa-circle-o"></i> 在线测试</a></li>--}}
-                    {{--<li><a href="pages/tables/data.html"><i class="fa fa-circle-o"></i> 答题管理</a></li>--}}
-                    {{--<li><a href="pages/tables/data.html"><i class="fa fa-circle-o"></i> 发布答题</a></li>--}}
-                {{--</ul>--}}
-            {{--</li>--}}
-            {{--<li>--}}
-                {{--<a href="pages/calendar.html">--}}
-                    {{--<i class="fa fa-calendar"></i> <span>日历</span>--}}
-                    {{--<span class="pull-right-container">--}}
-              {{--<small class="label pull-right bg-red">3</small>--}}
-              {{--<small class="label pull-right bg-blue">17</small>--}}
-            {{--</span>--}}
-                {{--</a>--}}
-            {{--</li>--}}
-
             <li class="treeview  {{active_class(if_route('files.index') || if_route('classfile.index'))}}">
                 <a href="#">
                     <i class="fa fa-folder"></i> <span>文件管理</span>
@@ -116,7 +90,6 @@
                 </ul>
             </li>
             @role(config('code.role'))
-            {{--|| if_route('users.edit') || if_route('users.show') ||if_route('users.search'))--}}
             <li class="treeview {{active_class(if_route('classes.verify') || if_route('classes.getagree')||if_route('classes.getdisagree'))  }}">
                 <a href="#">
                     <i class="fa fa-edit"></i> <span>班级审批</span>
@@ -136,7 +109,7 @@
             <li><a href="/admin/users"><i class="fa fa-circle-o text-danger"></i> <span>后台管理</span></a></li>
             @endrole
             <li class="@yield('error')"><a href="#"><i class="fa fa-circle-o text-yellow"></i> <span>警告</span></a></li>
-            <li><a href="#"><i class="fa fa-circle-o text-aqua"></i> <span>Information</span></a></li>
+            <li><a href="/"><i class="fa fa-circle-o text-aqua"></i> <span>返回首页</span></a></li>
         </ul>
     </section>
 </aside>
