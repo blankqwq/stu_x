@@ -18,29 +18,48 @@
             font-family: Hiragino Sans GB, "Hiragino Sans GB", Helvetica, "Microsoft YaHei", Arial,sans-serif;
         }
 
+
         #side-index{
-            border-top-color: #0b97c4;
-            border-top-width: 4px;
+            border-top: 4px solid #0b97c4;
             box-shadow: 0px 1px 11px 2px rgba(42, 42, 42, 0.1);
             margin-bottom: 40px;
             margin-top: 0px;
 
         }
-        footer {
-            position: fixed;
-            left: 0px;
-            bottom: 0px;
-            width: 100%;
+
+        html {
+            position: relative;
+            min-height: 100% ;
+        }
+        body {
+            margin-bottom: 60px;
+        }
+
+        .footer {
+            position: absolute;
+            bottom: 0;
+            width: 100% ;
+            /* Set the fixed height of the footer here */
             height: 60px;
             background-color: #000;
-        }
-        .container{
+
+        .container {
             padding-right: 15px;
             padding-left: 15px;
+
+        p {
+            margin: 19px 0;
+            color: #c1c1c1;
+
+        a {
+            color: inherit;
         }
-
-
+        }
+        }
+        }
     </style>
+    <script src="https://lib.baomitu.com/jquery/3.3.1/jquery.min.js"></script>
+
 </head>
 <body>
     <div id="app">
@@ -111,7 +130,7 @@
 
         @yield('content')
     </div>
-    <footer>
+    <footer class="footer">
         <div class="container">
             <p class="pull-left" style="line-height:60px;margin: 0;color: #c1c1c1; ">@blank</p>
             <p class="pull-right"style="line-height:60px;margin: 0; color: inherit; "><a href="mailto:{{ setting('contact_email') }}" >联系我们</a></p>
@@ -120,6 +139,7 @@
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}"></script>
 
+    <script src="{{ asset('admin/bower_components/jquery/dist/jquery.min.js') }}"></script>
 
 </body>
 </html>
