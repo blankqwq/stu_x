@@ -6,7 +6,7 @@
         <div class="col-md-9 col-md-offset-2">
             <div class="panel box-header thumbnail">
                 <div class="panel-heading">
-                    <img src="{{ setting('school_logo', '/storage/uploads/images/default.jpg') }}" class="img-responsive"
+                    <img src="/images/{{ setting('school_logo', '/storage/uploads/images/default.jpg') }}" class="img-responsive"
                          style="margin: 0 auto;"
                          height="300px" width="300px">
                     <h4 style="margin: 0 auto;" class="profile-username text-center">登录{{ setting('school_name', 'stu') }}</h4>

@@ -15,12 +15,11 @@ class TopicController extends Controller
 {
     public function create(){
         $types=TopicType::where('is_main',true)->get();
-        return view('stu.topic.create',compact('types'));
+        return view('front.topics.create',compact('types'));
     }
 
     public function store($id,TopicRequest $request,FileUploadHandler $upload)
     {
-        //权限保存
         $input=$request->only('title','type_id','content','can_reply','level');
         $input['user_id']=Auth::id();
         $input['class_id']=$id;
@@ -33,6 +32,10 @@ class TopicController extends Controller
         }
         $input['content']=clean($input['content']);
         Topic::create($input);
+        if ($input['class_id']==0){
+            return redirect(route('stu.index'))->with('success','发布成功');
+
+        }
         return redirect(route('classes.show',$id))->with('success','发布成功');
 
     }

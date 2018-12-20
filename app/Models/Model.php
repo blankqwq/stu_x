@@ -15,4 +15,8 @@ class Model extends \Illuminate\Database\Eloquent\Model
         return $query->orderBy('id', 'desc');
     }
 
+    public function scopeLevel($query){
+        return $query->orderBy('level', 'desc')->orderBy('created_at','desc');
+    }
+
 }

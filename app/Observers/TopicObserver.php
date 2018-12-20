@@ -16,6 +16,8 @@ class TopicObserver
 {
 
     public function created(Topic $topic){
-        SendNoticeJob::dispatch($topic);
+        if ($topic->class_id != 0)
+            SendNoticeJob::dispatch($topic);
+
     }
 }

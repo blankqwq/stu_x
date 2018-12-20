@@ -66,13 +66,13 @@ return [
         'qiniu' => [
             'driver'  => 'qiniu',
             'domains' => [
-                'default'   => 'p9sc0du71.bkt.clouddn.com', //你的七牛域名
+                'default'   => 'pjz0g4zje.bkt.clouddn.com', //你的七牛域名
                 'https'     => 'dn-yourdomain.qbox.me',         //你的HTTPS域名
                 'custom'    => 'static.abc.com',                //Useless 没啥用，请直接使用上面的 default 项
             ],
             'access_key'=> 'RIG53bX7B0RJL76ErQDaLBl6cNmOp4GD09G-uPcj',  //AccessKey
             'secret_key'=> 'A6iuqTirGd9A_qAguOk4KsraoWiOa_7qIZ0eEMDK',  //SecretKey
-            'bucket'    => 'stuhomework',  //Bucket名字
+            'bucket'    => 'dddd',  //Bucket名字
             'notify_url'=> '',  //持久化处理回调地址
             'access'    => 'public'  //空间访问控制 public 或 private
         ],

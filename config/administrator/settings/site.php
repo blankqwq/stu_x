@@ -78,7 +78,7 @@ return [
         if (strpos($data['site_name'], 'Powered by STU') === false) {
             $data['site_name'] .= ' - Powered by STU';
         }
-        $data['school_logo'] = '/images/'.$data['school_logo'];
+        $data['school_logo'] = $data['school_logo'];
     },
 
     'actions' => [
