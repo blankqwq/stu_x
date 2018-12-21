@@ -1,4 +1,10 @@
 <div class="modal-dialog">
+    <style>
+        img{
+            max-height: 100%;
+            max-width: 100%;
+        }
+    </style>
     <div class="modal-content">
         <div class="modal-header">
             <button type="button" class="close" data-dismiss="modal" aria-hidden="true">

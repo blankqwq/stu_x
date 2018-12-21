@@ -17,6 +17,7 @@ Route::get('/home', 'HomeController@home')->name('stu.home');
 Route::get('/', 'HomeController@index')->name('stu.index');
 
 
+Route::get("homework/export/{homework}","ExcelController@exportHomework")->name('homework.export');
 
 //登录的路由
 Route::group(['middleware' => 'auth','namespace'=>'Stu'], function () {
@@ -113,6 +114,5 @@ Route::group(['middleware' => 'auth','namespace'=>'Stu'], function () {
 
     Route::post('permissions/{class}/{id}', 'PermissionsController@giveclass')->name('pers.give');
     Route::delete('permissions/{class}/{id}', 'PermissionsController@delclass')->name('pers.del');
-
 
 });

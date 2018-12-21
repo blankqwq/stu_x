@@ -134,7 +134,7 @@
         @elseif(if_query('tab', 'homework'))
             @include('stu.classhome._homework',['homeworks'=>$classe->
             homeworks()->with('publisher')->withCount('posters')->recent()
-            ,'managers'=>$classe->mannages()])
+            ,'managers'=>$classe->mannagers()])
         @else
             @include('stu.classhome._data',['datas' => $classe->notices()->with('replies')->level()->paginate(10)])
         @endif

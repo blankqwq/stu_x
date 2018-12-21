@@ -61,7 +61,7 @@ class Classes extends Model
         return $this->morphMany(Chart::class,'chart');
     }
 
-    public function mannages(){
+    public function mannagers(){
         return  User::role('class'.$this->id)->get();
     }
 }

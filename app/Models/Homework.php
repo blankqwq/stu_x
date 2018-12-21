@@ -3,8 +3,12 @@
 namespace App\Models;
 
 
+use App\Models\Traits\FractionHelper;
+
 class Homework extends Model
 {
+
+    use FractionHelper;
     protected $table='homeworks';
     protected $fillable=['teacher_id', 'class_id', 'title', 'content', 'start_time', 'stop_time',];
 

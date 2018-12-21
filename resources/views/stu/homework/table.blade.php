@@ -19,6 +19,7 @@
                    role="button" id="read">批改</a>
                 <a href="{{route('homework.edit',$homework)}}" class="label label-warning  btn-sm"
                    role="button" id="read">修改</a>
+
             @endcan
 
         </td>
