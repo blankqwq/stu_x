@@ -11,12 +11,13 @@
   - swoole
   - phpredis
   - hiredis
+  - redis
 
 ### 本项目安装方法
 ```
 git clone https://github.com/blankqwq/stu_x.git
 composer install
-php artsian key:generate
+php artisan key:generate
 ```
 启动websocket服务
 
