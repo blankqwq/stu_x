@@ -1,5 +1,7 @@
 @extends('layouts.admin')
-
+@section('css')
+    <link rel="stylesheet" href="{{asset('admin/bower_components/morris.js/morris.css')}}">
+@endsection
 @section('content')
 
 
@@ -87,10 +89,51 @@
             <!-- ./col -->
         </div>
 
+        <div class="col-md-5">
+            <!-- AREA CHART -->
+            <div class="box box-primary">
+                <div class="box-header with-border">
+                    <h3 class="box-title">最近分数</h3>
+
+                    <div class="box-tools pull-right">
+                        <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+                        </button>
+                        <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+                    </div>
+                </div>
+                <div class="box-body chart-responsive">
+                    <div class="chart" id="revenue-chart" style="height: 300px;"></div>
+                </div>
+            </div>
+        </div>
+
         @include('stu.homework.recently',['homeworks'=>$homework_get])
 
+
     </section>
-    <!-- right col -->
+@endsection
+
+@section('js')
+    <script src="{{asset('admin/bower_components/raphael/raphael.min.js')}}"></script>
+    <script src="{{asset('admin/bower_components/morris.js/morris.min.js')}}"></script>
+    <script>
+        $(function () {
+            var area = new Morris.Line({
+                element: 'revenue-chart',
+                resize: true,
+                data: [
+                    @foreach($stuhomeworks as $s)
+                    {y: '{{$s->homework->created_at->toDateTimeString()}}', item1: {{$s->fraction }}, item2:{{$homework->getFraction($s->homework_id)  }}},
+                    @endforeach
+                ],
+                xkey: 'y',
+                ykeys: ['item1','item2'],
+                labels: ['我的分数', '平均分','标题'],
+                lineColors: ['#3c8dbc','#a0d0e0'],
+                hideHover: 'auto'
+            });
 
 
+        });
+    </script>
 @endsection

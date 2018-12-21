@@ -7,7 +7,6 @@
 <script src="{{ asset('admin/plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.all.min.js') }}"></script>
 <script src="{{ asset('admin/bower_components/jquery-slimscroll/jquery.slimscroll.min.js') }}"></script>
 <script src="{{ asset('admin/dist/js/adminlte.min.js') }}"></script>
-
 <script>
     function a(){
         htmlobj1 = $.ajax(

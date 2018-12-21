@@ -10,7 +10,6 @@
                         <span class="glyphicon glyphicon-search form-control-feedback"></span>
                     </div>
                 </div>
-                <!-- /.box-tools -->
             </div>
             <div class="box-body no-padding">
 
@@ -21,7 +20,7 @@
                         <div class="media">
                             <div class="avatar pull-left">
                                 <a href="{{ route('users.show', $notification->data['user_id']) }}">
-                                    <img class="media-object img-thumbnail" alt="{{ $notification->data['user_name'] }}" src="{{ $notification->data['user_avatar'] }}"  style="width:48px;height:48px;"/>
+                                    <img class="media-object img-thumbnail" alt="{{ $notification->data['user_name'] }}" src="{{url($notification->data['user_avatar'])}}"  style="width:48px;height:48px;"/>
                                 </a>
                             </div>
                             <div class="infos">

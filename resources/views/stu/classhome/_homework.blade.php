@@ -11,9 +11,7 @@
                     <span class="glyphicon glyphicon-search form-control-feedback"></span>
                 </div>
             </div>
-            <!-- /.box-tools -->
         </div>
-        <!-- /.box-header -->
         <div class="box-body no-padding">
             <div class="mailbox-controls">
 
@@ -67,7 +65,7 @@
                                     &nbsp;-{{\Carbon\Carbon::parse($homework->stop_time)->diffForHumans()}}</td>
 
                                 <td class="mailbox-date">{{$homework->created_at->diffForHumans()}}</td>
-                                <td>{{$homework->publisher->email}}</td>
+                                <td>{{$homework->publisher->name}}</td>
                                 <td>{{ $homework->posters_count }}</td>
                                 <td>
                                     <a href="{{route('homework.show',$homework)}}" class="label label-success  btn-sm"
@@ -78,6 +76,8 @@
                                        role="button" id="read">批改</a>
                                     <a href="{{route('homework.edit',$homework)}}" class="label label-warning  btn-sm"
                                        role="button" id="read">修改</a>
+                                    <a href="{{route('homework.export',$homework)}}" class="label label-warning  btn-sm"
+                                       role="button">导出</a>
                                     @endcan
 
                                 </td>
