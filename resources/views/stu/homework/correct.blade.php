@@ -94,7 +94,7 @@
                                 <a href="{{$stuhomework->attachment}}">{{ preg_replace("[.+/.+/]",'',$stuhomework->attachment) }}</a>
                             </td>
                             <td class="mailbox-date">{{\Carbon\Carbon::parse($stuhomework->created_at)->diffForHumans()}}</td>
-                            <td>{{ $stuhomework->fraction }}</td>
+                            <td id="grade{{$stuhomework->id}}">{{ $stuhomework->fraction }}</td>
                             <td>{{$stuhomework->poster->email}} [{{$stuhomework->poster->name}}]</td>
                             <td>
                                 <a href=" {{route('stuhomework.show',$stuhomework)}}"
