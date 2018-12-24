@@ -1,20 +1,31 @@
 <div class="modal-dialog">
+    <script crossorigin="anonymous" integrity="sha384-kQAIwZYuvWpBWbD3nlb0ndKyiK0CEcuzCreus/gbkOCY7Bit00PCA51jKXbsCrM/" src="https://lib.baomitu.com/jquery.form/4.2.2/jquery.form.js"></script>
     <style>
         img{
             max-height: 100%;
             max-width: 100%;
         }
     </style>
+    <script>
+       function saveReport() {
+           $("#dataform").ajaxSubmit(function(message) {
+               $('#grade{{$stuhomework->id}}').html($('#afraction').val());
+               alert('批改成功');
+               $('#modelclose').click()
+           });
+           return false;
+       }
+    </script>
     <div class="modal-content">
         <div class="modal-header">
-            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true" id="modelclose">
                 &times;
             </button>
             <h4 class="modal-title" id="myModalLabel">批改小窗</h4>
         </div>
         <div class="modal-body">
 
-            <form action="{{route('stuhomework.update',$stuhomework)}}" method="post">
+            <form action="{{route('stuhomework.update',$stuhomework)}}" method="post" id="dataform" onsubmit="return saveReport()" >
                 {{csrf_field()}}
                 {{method_field('put')}}
                 <div class="form-group">
@@ -31,7 +42,7 @@
                 </div>
                 <div class="form-group">
                     <label>分数</label>
-                    <input type="text" class="form-control" name="fraction"
+                    <input type="text" class="form-control" name="fraction" id="afraction"
                            value="{{ $stuhomework->fraction }}">
                 </div>
                 <div class="form-group">
@@ -59,10 +70,9 @@
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">关闭
                     </button>
-                    <button type="submit" class="btn btn-primary">提交更改</button>
+                    <button type="submit" class="btn btn-primary" >提交更改</button>
                 </div>
             </form>
-        </div><!-- /.modal -->
-
+        </div>
     </div>
 </div>

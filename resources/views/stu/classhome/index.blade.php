@@ -49,7 +49,7 @@
                             </li>
                             <li class="{{ active_class(if_query('tab', 'live')) }}">
                                 <a href="{{ route('classes.show', [$classe->id, 'tab' => 'live']) }}">
-                                    <i class="fa fa-envelope-o"></i> {{$classe->type->category}}图文直播</a>
+                                    <i class="fa fa-envelope-o"></i> {{$classe->type->category}}图文分析</a>
                             </li>
                             <li class="{{ active_class(if_query('tab', 'chart')) }}">
                                 <a href="{{ route('classes.show', [$classe->id, 'tab' => 'chart']) }}">
@@ -122,7 +122,7 @@
         @elseif(if_query('tab', 'file'))
             @include('stu.classhome._file', ['files' => $classe->files()->where('pid',0)->paginate(10)])
         @elseif(if_query('tab', 'live'))
-            @include('stu.classhome._live', ['lives' =>''])
+            @include('stu.classhome._live', ['homeworks' =>$classe->homeworks()->with('posters')->withCount('posters')->orderby('created_at','desc')->take(6)->get()])
         @elseif(if_query('tab', 'chart'))
             @include('stu.classhome._chart',['charts'=>$classe->chart()->with('user')->take(20)->get()])
         @elseif(if_query('tab', 'send'))

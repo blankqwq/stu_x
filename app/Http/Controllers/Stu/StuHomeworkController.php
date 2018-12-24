@@ -76,7 +76,6 @@ class StuHomeworkController extends Controller
         $stuhomework->comment=clean($comment);
         $stuhomework->save();
         $class_id=$stuhomework->homework->classes->id;
-        return Util::makeData(1,"更新成功");
     }
 
     public function upload(Request $request)
